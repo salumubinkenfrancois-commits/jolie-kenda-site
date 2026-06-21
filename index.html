@@ -3,8 +3,51 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jolie Kenda — Honorable · Femme d'affaires · Productrice · Actrice</title>
-  <meta name="description" content="Site officiel de Jolie Kenda — productrice, actrice et fondatrice de Collywood."/>
+  <title>Jolie Kenda — Actrice, Productrice & Fondatrice de Collywood | Site Officiel</title>
+  <meta name="description" content="Site officiel de Jolie Kenda — actrice, productrice de cinéma, entrepreneure et philanthrope congolaise. Fondatrice de Collywood, elle bâtit l'industrie du cinéma congolais et rayonne sur la scène internationale."/>
+  <meta name="keywords" content="Jolie Kenda, Collywood, cinéma congolais, productrice RDC, actrice congolaise, fondation Jolie Kenda, ambassadrice Tecno Camon 50, cinéma africain"/>
+  <meta name="author" content="Jolie Kenda"/>
+  <link rel="canonical" href="https://jolie-kenda-site.vercel.app/"/>
+
+  <!-- Open Graph (Facebook, LinkedIn, WhatsApp...) -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Jolie Kenda — Actrice, Productrice & Fondatrice de Collywood"/>
+  <meta property="og:description" content="Découvrez le parcours de Jolie Kenda : actrice, productrice, entrepreneure et philanthrope, fondatrice de Collywood — l'industrie du cinéma congolais de demain."/>
+  <meta property="og:url" content="https://jolie-kenda-site.vercel.app/"/>
+  <meta property="og:image" content="https://jolie-kenda-site.vercel.app/hero.jpg"/>
+  <meta property="og:locale" content="fr_FR"/>
+  <meta property="og:site_name" content="Jolie Kenda — Site Officiel"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Jolie Kenda — Actrice, Productrice & Fondatrice de Collywood"/>
+  <meta name="twitter:description" content="Actrice, productrice, entrepreneure et philanthrope congolaise. Fondatrice de Collywood — l'industrie du cinéma congolais de demain."/>
+  <meta name="twitter:image" content="https://jolie-kenda-site.vercel.app/hero.jpg"/>
+
+  <!-- Données structurées Schema.org — aide Google à comprendre qu'il s'agit d'une personnalité publique -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Jolie Kenda",
+    "jobTitle": ["Actrice", "Productrice de cinéma", "Entrepreneure", "Philanthrope"],
+    "description": "Actrice, productrice de cinéma, entrepreneure et philanthrope congolaise. Ancienne députée nationale de la RDC, fondatrice de Collywood Production.",
+    "url": "https://jolie-kenda-site.vercel.app/",
+    "image": "https://jolie-kenda-site.vercel.app/hero.jpg",
+    "nationality": "Congolaise (RDC)",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Collywood Production"
+    },
+    "sameAs": [
+      "https://www.tiktok.com/@kendajoliejolie",
+      "https://www.instagram.com/jolie_jolie_kenda",
+      "https://youtube.com/@hon.joliekendaofficiel",
+      "https://www.facebook.com/share/1EiYhVjzfZ/"
+    ]
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
@@ -91,6 +134,28 @@
     .nav-links a:hover { color: var(--gold); }
     .nav-cta { display: flex; gap: 0.7rem; }
 
+    /* ── SÉLECTEUR DE LANGUE ── */
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-right: 1.2rem;
+    }
+    .lang-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+      padding: 0.2rem 0.1rem;
+      transition: color 0.2s;
+    }
+    .lang-btn.active { color: var(--gold); font-weight: 500; }
+    .lang-btn:hover { color: var(--black); }
+    .lang-sep { color: var(--gray-light); font-size: 0.68rem; }
+
     /* ── BURGER BUTTON ── */
     .burger-btn {
       display: flex;
@@ -153,12 +218,13 @@
     .menu-panel-links {
       display: flex;
       flex-direction: column;
-      gap: 0.85rem;
-      margin-bottom: 2rem;
+      gap: 0.65rem;
+      margin-bottom: 1.5rem;
+      overflow-y: auto;
     }
     .menu-panel-links a {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       font-weight: 400;
       color: var(--black);
       text-decoration: none;
@@ -679,6 +745,40 @@
 
     /* ── CINÉMA ── */
     .cinema-section { background: var(--white); }
+
+    /* Vision / Mission — piliers Collywood */
+    .collywood-pillars {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 2.5rem auto 4rem;
+    }
+    .collywood-pillar {
+      border-left: 2px solid var(--gold);
+      padding-left: 1.5rem;
+    }
+    .collywood-pillar-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+    .collywood-pillar p {
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+    .cinema-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
     .cinema-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -866,6 +966,90 @@
       .timeline::before { left: 6px; }
     }
 
+    /* ── TALENTS COLLYWOOD ── */
+    .talents-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    .talent-card { text-align: center; }
+    .talent-photo {
+      aspect-ratio: 3/4;
+      background: linear-gradient(135deg, #ece9e2, #e0ddd4);
+      border-radius: 6px;
+      margin-bottom: 0.8rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .talent-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(135deg, transparent 45%, rgba(184,150,62,0.08) 50%, transparent 55%);
+    }
+    .talent-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--black);
+    }
+    .talent-role {
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 0.2rem;
+    }
+
+    /* ── GALERIE DE TOURNAGE ── */
+    .set-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+    }
+    .set-gallery-item {
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, #1a1a1a, #0c0c0c);
+      border-radius: 6px;
+    }
+    @media (max-width: 768px) {
+      .talents-grid { grid-template-columns: repeat(2, 1fr); }
+      .set-gallery { grid-template-columns: repeat(2, 1fr); }
+      .collywood-pillars { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+
+    /* ── BUSINESS & LEADERSHIP ── */
+    .business-section { background: var(--dark); }
+    .business-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .business-card {
+      padding: 2.2rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .business-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+    .business-icon { color: var(--gold); margin-bottom: 1.2rem; }
+    .business-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.7rem;
+    }
+    .business-card p {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    @media (max-width: 768px) {
+      .business-grid { grid-template-columns: 1fr; }
+    }
+
     /* ── COLLABORATIONS ── */
     .collab-section { background: var(--cream); }
     .collab-grid {
@@ -965,6 +1149,188 @@
       height: 1px;
       background: var(--gold);
       flex-shrink: 0;
+    }
+
+    /* ── PILIERS PHILANTHROPIQUES ── */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    .pillar-card {
+      text-align: center;
+      padding: 2rem 1.2rem;
+      border: 1px solid #f0eee9;
+      border-radius: 6px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .pillar-card:hover { box-shadow: 0 8px 25px rgba(0,0,0,0.07); transform: translateY(-3px); }
+    .pillar-icon { color: var(--gold); margin-bottom: 1rem; display: flex; justify-content: center; }
+    .pillar-card h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .pillar-card p {
+      font-size: 0.78rem;
+      color: var(--gray);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ── IMPACT ── */
+    .impact-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--gray-light);
+    }
+    .impact-stat { text-align: center; }
+    .impact-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.6rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .impact-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+    @media (max-width: 768px) {
+      .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+      .impact-bar { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    /* ── AMBASSADRICE INTERNATIONALE ── */
+    .ambassador-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    .ambassador-card {
+      padding: 2rem 1.5rem;
+      background: var(--cream);
+      border: 1px solid #f0eee9;
+      border-radius: 6px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+      transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s;
+    }
+    .ambassador-card:hover {
+      box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+      transform: translateY(-3px);
+      border-color: var(--gold);
+    }
+    .ambassador-tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+    }
+    .ambassador-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+    .ambassador-card p {
+      font-size: 0.78rem;
+      color: var(--gray);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    @media (max-width: 768px) {
+      .ambassador-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ── PRESSE & INTERVIEWS ── */
+    .press-list {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--gray-light);
+    }
+    .press-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.3rem 0;
+      border-bottom: 1px solid var(--gray-light);
+      text-decoration: none;
+      color: inherit;
+      transition: padding-left 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .press-item:hover { padding-left: 0.6rem; }
+    .press-source {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      flex-shrink: 0;
+      width: 130px;
+    }
+    .press-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--black);
+      flex: 1;
+    }
+    .press-arrow {
+      color: var(--gold);
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .press-item:hover .press-arrow { opacity: 1; }
+    @media (max-width: 768px) {
+      .press-item { flex-wrap: wrap; gap: 0.4rem; }
+      .press-source { width: 100%; }
+    }
+
+    /* ── AU-DELÀ DES PROJECTEURS ── */
+    .personal-section {
+      background: var(--dark);
+      padding: 6rem 3rem;
+    }
+    .personal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      align-items: center;
+    }
+    .personal-text p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.9;
+      font-weight: 300;
+      margin-bottom: 1.2rem;
+    }
+    .personal-quote-block {
+      border-left: 2px solid var(--gold);
+      padding-left: 2rem;
+    }
+    .personal-quote-block blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--gold-light);
+    }
+    @media (max-width: 768px) {
+      .personal-section { padding: 4rem 1.2rem; }
+      .personal-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .personal-quote-block { border-left: none; border-top: 2px solid var(--gold); padding-left: 0; padding-top: 1.5rem; }
     }
 
     /* ── VISION ── */
@@ -1285,11 +1651,16 @@
 <nav>
   <a href="#top" class="nav-logo">Jolie Kenda</a>
   <ul class="nav-links">
-    <li><a href="#about">À propos</a></li>
-    <li><a href="#cinema">Collywood</a></li>
-    <li><a href="#engagement">Fondation</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#about" data-i18n="nav.about">À propos</a></li>
+    <li><a href="#cinema" data-i18n="nav.cinema">Collywood</a></li>
+    <li><a href="#fondation" data-i18n="nav.fondation">Fondation</a></li>
+    <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
   </ul>
+  <div class="lang-switch">
+    <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')">FR</button>
+    <span class="lang-sep">/</span>
+    <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+  </div>
   <button class="burger-btn" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -1301,18 +1672,21 @@
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
   </button>
   <div class="menu-panel-links">
-    <a href="#about" onclick="toggleMenu()">À propos</a>
-    <a href="#parcours" onclick="toggleMenu()">Parcours</a>
-    <a href="#stats" onclick="toggleMenu()">Audience</a>
-    <a href="#cinema" onclick="toggleMenu()">Collywood</a>
-    <a href="#services" onclick="toggleMenu()">Collab</a>
-    <a href="#engagement" onclick="toggleMenu()">Fondation</a>
-    <a href="#vision" onclick="toggleMenu()">Vision</a>
-    <a href="#contact" onclick="toggleMenu()">Contact</a>
+    <a href="#about" onclick="toggleMenu()" data-i18n="nav.about">À propos</a>
+    <a href="#parcours" onclick="toggleMenu()" data-i18n="parcours.eyebrow">Parcours</a>
+    <a href="#stats" onclick="toggleMenu()" data-i18n="stats.eyebrow">Audience</a>
+    <a href="#cinema" onclick="toggleMenu()" data-i18n="nav.cinema">Collywood</a>
+    <a href="#business" onclick="toggleMenu()" data-i18n="business.eyebrow">Business</a>
+    <a href="#services" onclick="toggleMenu()" data-i18n="menu.collab">Collab</a>
+    <a href="#fondation" onclick="toggleMenu()" data-i18n="nav.fondation">Fondation</a>
+    <a href="#ambassadrice" onclick="toggleMenu()" data-i18n="menu.ambassador">Ambassadrice</a>
+    <a href="#medias" onclick="toggleMenu()" data-i18n="medias.eyebrow">Médias</a>
+    <a href="#vision" onclick="toggleMenu()" data-i18n="menu.vision">Vision</a>
+    <a href="#contact" onclick="toggleMenu()" data-i18n="nav.contact">Contact</a>
   </div>
   <div class="menu-panel-actions">
-    <button class="btn btn-outline" onclick="toggleMenu(); openModal('modal-propositions')">Proposer une idée</button>
-    <button class="btn btn-gold" onclick="toggleMenu(); openModal('modal-postuler')">Postuler</button>
+    <button class="btn btn-outline" onclick="toggleMenu(); openModal('modal-propositions')" data-i18n="menu.proposeIdea">Proposer une idée</button>
+    <button class="btn btn-gold" onclick="toggleMenu(); openModal('modal-postuler')" data-i18n="menu.apply">Postuler</button>
   </div>
 </div>
 <div class="menu-overlay" id="menu-overlay" onclick="toggleMenu()"></div>
@@ -1330,14 +1704,14 @@
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="hero-text">
-    <span class="hero-label">Actrice · Productrice · Entrepreneure · Philanthrope</span>
+    <span class="hero-label" data-i18n="hero.label">Actrice · Productrice · Entrepreneure · Philanthrope</span>
     <h1 class="hero-title">Jolie<strong>Kenda</strong></h1>
     <div class="hero-rule"></div>
-    <p class="hero-sub">Fondatrice de Collywood — Construire le cinéma congolais de demain</p>
+    <p class="hero-sub" data-i18n="hero.sub">Fondatrice de Collywood — Construire le cinéma congolais de demain</p>
     <div class="hero-actions">
-      <a href="#parcours" class="btn btn-gold">Découvrir mon parcours</a>
+      <a href="#parcours" class="btn btn-gold" data-i18n="hero.cta1">Découvrir mon parcours</a>
       <a href="#cinema" class="btn btn-outline">Collywood</a>
-      <a href="#fondation" class="btn btn-outline">Fondation</a>
+      <a href="#fondation" class="btn btn-outline" data-i18n="nav.fondation">Fondation</a>
     </div>
     <div class="hero-social">
       <a href="https://www.tiktok.com/@kendajoliejolie?_r=1&_t=ZS-97KK52z2YRr" target="_blank" title="TikTok">
@@ -1370,14 +1744,14 @@
       <img src="about.jpg" alt="Jolie Kenda — portrait" style="object-position:top center;"/>
     </div>
     <div class="about-text reveal-right">
-      <span class="section-eyebrow">À propos</span>
-      <h2 class="section-title">Permettez-moi de me <em>présenter</em></h2>
-      <p>Titulaire d'un Master en Management Public, Jolie Kenda incarne l'excellence et l'engagement au service du développement.</p>
-      <p>Figure emblématique de la nouvelle génération africaine, elle a su conjuguer une carrière politique de haut vol — marquée par son mandat de députée nationale en République Démocratique du Congo et la fondation du Parti du Peuple Congolais (PPEC) — avec une audace entrepreneuriale visionnaire.</p>
-      <p>Femme de conviction, elle place l'intérêt collectif au cœur de ses actions, convaincue que « savoir perdre à titre personnel est le gage pour gagner à titre collectif ».</p>
-      <p>Au-delà de la sphère politique, elle s'est imposée comme une icône de la culture et des médias. Fondatrice de COLLYWOOD, productrice de cinéma et actrice, elle a insufflé une signature glamour et innovante au 7ème art congolais.</p>
-      <p>Surnommée « la Légende », cette mère engagée, épouse et leader, porte en elle la promesse d'une Afrique moderne, résiliente et fière.</p>
-      <p>Elle ne se contente pas de naviguer dans son époque : elle la façonne par son intégrité, sa discipline et une volonté inébranlable de transformer le leadership féminin en un véritable moteur de progrès social.</p>
+      <span class="section-eyebrow" data-i18n="about.eyebrow">À propos</span>
+      <h2 class="section-title" data-i18n="about.title">Permettez-moi de me <em>présenter</em></h2>
+      <p data-i18n="about.p1">Titulaire d'un Master en Management Public, Jolie Kenda incarne l'excellence et l'engagement au service du développement.</p>
+      <p data-i18n="about.p2">Figure emblématique de la nouvelle génération africaine, elle a su conjuguer une carrière politique de haut vol — marquée par son mandat de députée nationale en République Démocratique du Congo et la fondation du Parti du Peuple Congolais (PPEC) — avec une audace entrepreneuriale visionnaire.</p>
+      <p data-i18n="about.p3">Femme de conviction, elle place l'intérêt collectif au cœur de ses actions, convaincue que « savoir perdre à titre personnel est le gage pour gagner à titre collectif ».</p>
+      <p data-i18n="about.p4">Au-delà de la sphère politique, elle s'est imposée comme une icône de la culture et des médias. Fondatrice de COLLYWOOD, productrice de cinéma et actrice, elle a insufflé une signature glamour et innovante au 7ème art congolais.</p>
+      <p data-i18n="about.p5">Surnommée « la Légende », cette mère engagée, épouse et leader, porte en elle la promesse d'une Afrique moderne, résiliente et fière.</p>
+      <p data-i18n="about.p6">Elle ne se contente pas de naviguer dans son époque : elle la façonne par son intégrité, sa discipline et une volonté inébranlable de transformer le leadership féminin en un véritable moteur de progrès social.</p>
       <div class="about-signature">Jolie Kenda</div>
     </div>
   </div>
@@ -1389,38 +1763,38 @@
 <!-- TIMELINE PARCOURS -->
 <section class="timeline-section" id="parcours">
   <div style="max-width:760px;margin:0 auto;">
-    <span class="section-eyebrow reveal" style="text-align:center;display:block;">Parcours</span>
-    <h2 class="section-title reveal" style="text-align:center;">Une trajectoire au service du <em>Congo</em></h2>
+    <span class="section-eyebrow reveal" style="text-align:center;display:block;" data-i18n="parcours.eyebrow">Parcours</span>
+    <h2 class="section-title reveal" style="text-align:center;" data-i18n="parcours.title">Une trajectoire au service du <em>Congo</em></h2>
     <div class="timeline" style="margin-top:3.5rem;">
       <div class="timeline-item reveal">
         <div class="timeline-dot"></div>
-        <span class="timeline-year">Engagement public</span>
-        <h3 class="timeline-title">Députée nationale de la RDC</h3>
-        <p class="timeline-desc">Jolie Kenda entame son parcours au service de la nation en tant que députée nationale, portant la voix de ses concitoyens au sein des institutions de la République Démocratique du Congo.</p>
+        <span class="timeline-year" data-i18n="parcours.y1">Engagement public</span>
+        <h3 class="timeline-title" data-i18n="parcours.t1">Députée nationale de la RDC</h3>
+        <p class="timeline-desc" data-i18n="parcours.d1">Jolie Kenda entame son parcours au service de la nation en tant que députée nationale, portant la voix de ses concitoyens au sein des institutions de la République Démocratique du Congo.</p>
       </div>
       <div class="timeline-item reveal">
         <div class="timeline-dot"></div>
-        <span class="timeline-year">Transition</span>
-        <h3 class="timeline-title">Vers l'entrepreneuriat culturel</h3>
-        <p class="timeline-desc">Forte de son expérience politique et de sa connaissance du terrain, elle oriente son énergie vers la culture et l'économie créative, convaincue que le cinéma peut devenir un moteur de développement national.</p>
+        <span class="timeline-year" data-i18n="parcours.y2">Transition</span>
+        <h3 class="timeline-title" data-i18n="parcours.t2">Vers l'entrepreneuriat culturel</h3>
+        <p class="timeline-desc" data-i18n="parcours.d2">Forte de son expérience politique et de sa connaissance du terrain, elle oriente son énergie vers la culture et l'économie créative, convaincue que le cinéma peut devenir un moteur de développement national.</p>
       </div>
       <div class="timeline-item reveal">
         <div class="timeline-dot"></div>
-        <span class="timeline-year">Fondation</span>
-        <h3 class="timeline-title">Création de Collywood</h3>
-        <p class="timeline-desc">Elle fonde Collywood Production, avec l'ambition de bâtir une véritable industrie cinématographique congolaise capable de rivaliser avec les standards internationaux.</p>
+        <span class="timeline-year" data-i18n="parcours.y3">Fondation</span>
+        <h3 class="timeline-title" data-i18n="parcours.t3">Création de Collywood</h3>
+        <p class="timeline-desc" data-i18n="parcours.d3">Elle fonde Collywood Production, avec l'ambition de bâtir une véritable industrie cinématographique congolaise capable de rivaliser avec les standards internationaux.</p>
       </div>
       <div class="timeline-item reveal">
         <div class="timeline-dot"></div>
-        <span class="timeline-year">Rayonnement</span>
-        <h3 class="timeline-title">Influence nationale et internationale</h3>
-        <p class="timeline-desc">Productrice, actrice et femme d'affaires reconnue, elle représente aujourd'hui la RDC sur des scènes panafricaines et internationales, en tant qu'ambassadrice du cinéma et de la culture congolaise.</p>
+        <span class="timeline-year" data-i18n="parcours.y4">Rayonnement</span>
+        <h3 class="timeline-title" data-i18n="parcours.t4">Influence nationale et internationale</h3>
+        <p class="timeline-desc" data-i18n="parcours.d4">Productrice, actrice et femme d'affaires reconnue, elle représente aujourd'hui la RDC sur des scènes panafricaines et internationales, en tant qu'ambassadrice du cinéma et de la culture congolaise.</p>
       </div>
       <div class="timeline-item reveal">
         <div class="timeline-dot"></div>
-        <span class="timeline-year">Aujourd'hui</span>
-        <h3 class="timeline-title">Leader culturelle et philanthrope</h3>
-        <p class="timeline-desc">À la tête de Collywood et de sa fondation, elle poursuit une mission qui dépasse le cinéma : faire rayonner l'identité congolaise et ouvrir des opportunités pour la jeunesse, les femmes et les talents de demain.</p>
+        <span class="timeline-year" data-i18n="parcours.y5">Aujourd'hui</span>
+        <h3 class="timeline-title" data-i18n="parcours.t5">Leader culturelle et philanthrope</h3>
+        <p class="timeline-desc" data-i18n="parcours.d5">À la tête de Collywood et de sa fondation, elle poursuit une mission qui dépasse le cinéma : faire rayonner l'identité congolaise et ouvrir des opportunités pour la jeunesse, les femmes et les talents de demain.</p>
       </div>
     </div>
   </div>
@@ -1432,8 +1806,8 @@
 <!-- STATS -->
 <section class="stats-section" id="stats">
   <div class="stats-inner">
-    <span class="section-eyebrow reveal" style="color:var(--gold);">Audience</span>
-    <h2 class="section-title reveal" style="color:var(--white);">Un rayonnement de <em>continent</em></h2>
+    <span class="section-eyebrow reveal" style="color:var(--gold);" data-i18n="stats.eyebrow">Audience</span>
+    <h2 class="section-title reveal" style="color:var(--white);" data-i18n="stats.title">Un rayonnement de <em>continent</em></h2>
     <div class="stats-grid">
       <a href="https://www.tiktok.com/@kendajoliejolie?_r=1&_t=ZS-97KK52z2YRr" target="_blank" class="stat-card reveal" title="Voir le profil TikTok">
         <div class="stat-icon">
@@ -1470,12 +1844,26 @@
 <!-- DIVIDER -->
 <div class="section-divider"><div class="jk-divider"><span class="jk-monogram">J · K</span></div></div>
 
-<!-- CINÉMA -->
+<!-- CINÉMA — COLLYWOOD -->
 <section class="cinema-section" id="cinema">
   <div style="max-width:1200px;margin:0 auto;">
-    <span class="section-eyebrow reveal" id="cinema-trigger">Collywood</span>
-    <h2 class="section-title reveal">Le Cinéma <em>Congolais</em></h2>
-    <p class="reveal" style="color:var(--gray);max-width:550px;margin-bottom:3rem;line-height:1.8;font-size:0.88rem;font-weight:300;">Une maison de production qui donne au cinéma congolais une signature glamour et populaire, avec des collaborations jusqu'à Nollywood.</p>
+    <span class="section-eyebrow reveal" id="cinema-trigger" data-i18n="nav.cinema">Collywood</span>
+    <h2 class="section-title reveal" data-i18n="cinema.title">Bâtir l'industrie du cinéma <em>congolais</em></h2>
+    <p class="reveal" style="color:var(--gray);max-width:680px;margin-bottom:1rem;line-height:1.8;font-size:0.92rem;font-weight:300;" data-i18n="cinema.intro">Collywood n'est pas une simple maison de production. C'est le projet d'une vie : créer une véritable industrie cinématographique congolaise, capable de représenter la République Démocratique du Congo au niveau mondial — à l'image de Hollywood, Bollywood et Nollywood.</p>
+
+    <!-- VISION / MISSION -->
+    <div class="collywood-pillars">
+      <div class="collywood-pillar reveal">
+        <span class="collywood-pillar-num" data-i18n="cinema.visionLabel">Vision</span>
+        <p data-i18n="cinema.visionText">Faire du Congo une référence cinématographique africaine, où les talents locaux peuvent créer, produire et exporter des œuvres reconnues à l'international.</p>
+      </div>
+      <div class="collywood-pillar reveal">
+        <span class="collywood-pillar-num" data-i18n="cinema.missionLabel">Mission</span>
+        <p data-i18n="cinema.missionText">Produire des films ambitieux, former une nouvelle génération de talents congolais, et bâtir les infrastructures durables d'une véritable industrie créative nationale.</p>
+      </div>
+    </div>
+
+    <h3 class="cinema-subtitle reveal" data-i18n="cinema.productions">Productions</h3>
     <div class="cinema-grid">
       <!-- Film 1 — remplacer href par lien YouTube réel -->
       <div class="film-card reveal" onclick="playFilm(this, 'GwAEY0wy2mQ')">
@@ -1527,40 +1915,107 @@
         </div>
       </div>
     </div>
+
+    <!-- TALENTS — structure prête, à compléter avec les vrais talents -->
+    <h3 class="cinema-subtitle reveal" style="margin-top:4rem;" data-i18n="cinema.talentsTitle">Talents</h3>
+    <p class="reveal" style="color:var(--gray);max-width:600px;margin-bottom:2rem;line-height:1.8;font-size:0.85rem;font-weight:300;" data-i18n="cinema.talentsIntro">Collywood révèle et accompagne une nouvelle génération d'acteurs, réalisateurs et techniciens congolais.</p>
+    <div class="talents-grid">
+      <div class="talent-card reveal">
+        <div class="talent-photo"></div>
+        <div class="talent-name">Nom du talent</div>
+        <div class="talent-role">Rôle / Spécialité</div>
+      </div>
+      <div class="talent-card reveal">
+        <div class="talent-photo"></div>
+        <div class="talent-name">Nom du talent</div>
+        <div class="talent-role">Rôle / Spécialité</div>
+      </div>
+      <div class="talent-card reveal">
+        <div class="talent-photo"></div>
+        <div class="talent-name">Nom du talent</div>
+        <div class="talent-role">Rôle / Spécialité</div>
+      </div>
+      <div class="talent-card reveal">
+        <div class="talent-photo"></div>
+        <div class="talent-name">Nom du talent</div>
+        <div class="talent-role">Rôle / Spécialité</div>
+      </div>
+    </div>
+
+    <!-- GALERIE TOURNAGE — structure prête, à compléter avec les vraies photos -->
+    <h3 class="cinema-subtitle reveal" style="margin-top:4rem;" data-i18n="cinema.galleryTitle">Galerie de tournage</h3>
+    <div class="set-gallery">
+      <div class="set-gallery-item reveal"></div>
+      <div class="set-gallery-item reveal"></div>
+      <div class="set-gallery-item reveal"></div>
+      <div class="set-gallery-item reveal"></div>
+      <div class="set-gallery-item reveal"></div>
+      <div class="set-gallery-item reveal"></div>
+    </div>
   </div>
 </section>
 
 <!-- DIVIDER -->
-<div class="section-divider"><div class="jk-divider"><span class="jk-monogram">J · K</span></div></div>
+<div class="section-divider" style="background:var(--dark);"><div class="jk-divider" style="border-color:rgba(255,255,255,0.1);"><span class="jk-monogram">J · K</span></div></div>
+
+<!-- BUSINESS & LEADERSHIP -->
+<section class="business-section" id="business">
+  <div style="max-width:1200px;margin:0 auto;">
+    <span class="section-eyebrow reveal" style="color:var(--gold);" data-i18n="business.eyebrow">Business</span>
+    <h2 class="section-title reveal" style="color:var(--white);" data-i18n="business.title">Vision <em>entrepreneuriale</em></h2>
+    <p class="reveal" style="color:rgba(255,255,255,0.55);max-width:680px;margin-bottom:3rem;line-height:1.8;font-size:0.9rem;font-weight:300;" data-i18n="business.intro">Au-delà du cinéma, Jolie Kenda incarne un leadership entrepreneurial au service du développement économique congolais — convaincue que l'audace et l'intégrité sont les véritables moteurs du progrès.</p>
+
+    <div class="business-grid">
+      <div class="business-card reveal">
+        <div class="business-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg></div>
+        <h3 data-i18n="business.t1">Entreprises</h3>
+        <p data-i18n="business.d1">À la tête de plusieurs structures, dont Collywood Production, elle pilote des projets à l'intersection du cinéma, du commerce et de la culture.</p>
+      </div>
+      <div class="business-card reveal">
+        <div class="business-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M17 8a3 3 0 11-6 0 3 3 0 016 0zM9 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M3 21v-2a4 4 0 014-4h1m9-3a4 4 0 014 4v2"/></svg></div>
+        <h3 data-i18n="business.t2">Partenariats</h3>
+        <p data-i18n="business.d2">Elle construit des alliances stratégiques avec des marques, institutions et acteurs panafricains pour accélérer le rayonnement du cinéma congolais.</p>
+      </div>
+      <div class="business-card reveal">
+        <div class="business-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div>
+        <h3 data-i18n="business.t3">Leadership</h3>
+        <p data-i18n="business.d3">Issue du monde politique, elle applique au monde des affaires une rigueur et une vision stratégique forgées au service de l'intérêt collectif.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="section-divider" style="background:var(--dark);"><div class="jk-divider" style="border-color:rgba(255,255,255,0.1);"><span class="jk-monogram">J · K</span></div></div>
 
 <!-- COLLABORATIONS -->
 <section class="collab-section" id="services">
   <div style="max-width:1000px;margin:0 auto;">
-    <span class="section-eyebrow reveal">Collaborations</span>
-    <h2 class="section-title reveal" style="text-align:center;">Travailler avec <em>Jolie</em></h2>
+    <span class="section-eyebrow reveal" data-i18n="collab.eyebrow">Collaborations</span>
+    <h2 class="section-title reveal" style="text-align:center;" data-i18n="collab.title">Travailler avec <em>Jolie</em></h2>
     <div class="collab-grid">
       <div class="collab-card reveal">
         <div class="collab-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8l3-5h4l-2 5M9 8l2-5h4l-2 5M16 8l2-5h4l-2 5M2 8h20v11a2 2 0 01-2 2H4a2 2 0 01-2-2V8z"/></svg></div>
-        <h3>Intégration Cinéma</h3>
-        <p>Placement naturel de votre marque dans une production Collywood, pour toucher des millions de spectateurs fidèles.</p>
+        <h3 data-i18n="collab.t1">Intégration Cinéma</h3>
+        <p data-i18n="collab.d1">Placement naturel de votre marque dans une production Collywood, pour toucher des millions de spectateurs fidèles.</p>
         <div class="collab-detail">Films · Séries · Court-métrages</div>
       </div>
       <div class="collab-card reveal">
         <div class="collab-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg></div>
-        <h3>Contenu Digital</h3>
-        <p>Création d'un contenu authentique et engageant sur TikTok, Instagram ou YouTube, adapté à votre identité de marque.</p>
+        <h3 data-i18n="collab.t2">Contenu Digital</h3>
+        <p data-i18n="collab.d2">Création d'un contenu authentique et engageant sur TikTok, Instagram ou YouTube, adapté à votre identité de marque.</p>
         <div class="collab-detail">TikTok · Instagram · YouTube</div>
       </div>
       <div class="collab-card reveal">
         <div class="collab-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 18h20M3 18l1.5-9L8 13l4-8 4 8 3.5-4L21 18"/></svg></div>
-        <h3>Ambassade de Marque</h3>
-        <p>Un partenariat durable où Jolie Kenda représente vos valeurs avec élégance et crédibilité auprès de sa communauté.</p>
+        <h3 data-i18n="collab.t3">Ambassade de Marque</h3>
+        <p data-i18n="collab.d3">Un partenariat durable où Jolie Kenda représente vos valeurs avec élégance et crédibilité auprès de sa communauté.</p>
         <div class="collab-detail">Long terme · Contrat · Exclusivité</div>
       </div>
       <div class="collab-card reveal">
         <div class="collab-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v4M9 22h6"/></svg></div>
-        <h3>Présence Événementielle</h3>
-        <p>Invitation, prise de parole ou co-animation lors de vos événements privés, galas ou lancements de produits.</p>
+        <h3 data-i18n="collab.t4">Présence Événementielle</h3>
+        <p data-i18n="collab.d4">Invitation, prise de parole ou co-animation lors de vos événements privés, galas ou lancements de produits.</p>
         <div class="collab-detail">Galas · Lancements · Conférences</div>
       </div>
     </div>
@@ -1570,23 +2025,162 @@
 <!-- DIVIDER -->
 <div class="section-divider"><div class="jk-divider"><span class="jk-monogram">J · K</span></div></div>
 
-<!-- ENGAGEMENT -->
-<section id="engagement" style="background:var(--white);">
+<!-- FONDATION -->
+<section id="fondation" style="background:var(--white);">
   <div class="engagement-grid">
     <div class="engagement-img reveal-left">
       <img src="engagement.jpg" alt="Fondation Jolie Kenda" style="object-position:top center;"/>
     </div>
     <div class="reveal-right">
-      <span class="section-eyebrow">Fondation</span>
-      <h2 class="section-title">Engagement &amp; <em>Action</em></h2>
-      <p style="color:var(--gray);line-height:1.9;font-size:0.88rem;font-weight:300;">Présidente de la Fondation Jolie Kenda, elle transforme l'influence en action concrète. Sa communauté « Les Mignonnettes » rayonne de la RDC jusqu'en France, aux États-Unis et en Afrique du Sud.</p>
+      <span class="section-eyebrow" data-i18n="fondation.eyebrow">Fondation</span>
+      <h2 class="section-title" data-i18n="fondation.title">Engagement &amp; <em>Action</em></h2>
+      <p style="color:var(--gray);line-height:1.9;font-size:0.88rem;font-weight:300;" data-i18n="fondation.intro">Présidente de la Fondation Jolie Kenda, elle transforme l'influence en action concrète. Sa communauté « Les Mignonnettes » rayonne de la RDC jusqu'en France, aux États-Unis et en Afrique du Sud.</p>
       <ul class="causes-list">
-        <li>Encadrement et formation des jeunes</li>
-        <li>Autonomisation des femmes</li>
-        <li>Inclusion et handicap</li>
-        <li>Assistance aux orphelins</li>
-        <li>Formation aux métiers du cinéma</li>
+        <li data-i18n="fondation.c1">Encadrement et formation des jeunes</li>
+        <li data-i18n="fondation.c2">Autonomisation des femmes</li>
+        <li data-i18n="fondation.c3">Inclusion et handicap</li>
+        <li data-i18n="fondation.c4">Assistance aux orphelins</li>
+        <li data-i18n="fondation.c5">Formation aux métiers du cinéma</li>
       </ul>
+    </div>
+  </div>
+
+  <!-- PILIERS PHILANTHROPIQUES -->
+  <div style="max-width:1200px;margin:5rem auto 0;">
+    <h3 class="cinema-subtitle reveal" style="text-align:center;margin-bottom:2.5rem;" data-i18n="fondation.pillarsTitle">Nos domaines d'action</h3>
+    <div class="pillars-grid">
+      <div class="pillar-card reveal">
+        <div class="pillar-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0116 0v1"/></svg></div>
+        <h4 data-i18n="fondation.p1Title">Jeunesse</h4>
+        <p data-i18n="fondation.p1Text">Encadrement, mentorat et ouverture d'opportunités pour la jeunesse congolaise.</p>
+      </div>
+      <div class="pillar-card reveal">
+        <div class="pillar-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/><path d="M16 4.5a4 4 0 010 7"/></svg></div>
+        <h4 data-i18n="fondation.p2Title">Femmes</h4>
+        <p data-i18n="fondation.p2Text">Programmes d'autonomisation économique et de leadership féminin.</p>
+      </div>
+      <div class="pillar-card reveal">
+        <div class="pillar-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 8l3-5h4l-2 5M9 8l2-5h4l-2 5M16 8l2-5h4l-2 5M2 8h20v11a2 2 0 01-2 2H4a2 2 0 01-2-2V8z"/></svg></div>
+        <h4 data-i18n="fondation.p3Title">Culture</h4>
+        <p data-i18n="fondation.p3Text">Formation aux métiers du cinéma et valorisation du patrimoine congolais.</p>
+      </div>
+      <div class="pillar-card reveal">
+        <div class="pillar-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg></div>
+        <h4 data-i18n="fondation.p4Title">Éducation</h4>
+        <p data-i18n="fondation.p4Text">Soutien scolaire et accès à l'éducation pour les enfants vulnérables.</p>
+      </div>
+    </div>
+
+    <!-- IMPACT — chiffres à compléter avec les données réelles -->
+    <div class="impact-bar reveal">
+      <div class="impact-stat">
+        <div class="impact-num">—</div>
+        <div class="impact-label" data-i18n="fondation.impact1">Bénéficiaires accompagnés</div>
+      </div>
+      <div class="impact-stat">
+        <div class="impact-num">—</div>
+        <div class="impact-label" data-i18n="fondation.impact2">Programmes actifs</div>
+      </div>
+      <div class="impact-stat">
+        <div class="impact-num">—</div>
+        <div class="impact-label" data-i18n="fondation.impact3">Villes touchées</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="section-divider"><div class="jk-divider"><span class="jk-monogram">J · K</span></div></div>
+
+<!-- AMBASSADRICE INTERNATIONALE -->
+<section id="ambassadrice" style="background:var(--white);">
+  <div style="max-width:1200px;margin:0 auto;">
+    <span class="section-eyebrow reveal" data-i18n="ambassador.eyebrow">Rayonnement</span>
+    <h2 class="section-title reveal" data-i18n="ambassador.title">Rayonner au-delà des <em>frontières</em></h2>
+    <p class="reveal" style="color:var(--gray);max-width:680px;margin-bottom:3rem;line-height:1.8;font-size:0.9rem;font-weight:300;" data-i18n="ambassador.intro">Ambassadrice du cinéma et de la culture congolaise, Jolie Kenda représente la République Démocratique du Congo sur les scènes panafricaines et internationales, tissant des ponts entre les industries créatives du continent.</p>
+
+    <div class="ambassador-grid">
+      <div class="ambassador-card reveal">
+        <div class="ambassador-tag" data-i18n="ambassador.tag1">Marque</div>
+        <h3>Tecno Camon 50</h3>
+        <p data-i18n="ambassador.d1">Ambassadrice de la campagne Camon 50 de Tecno, portant l'image de la marque auprès du public congolais et africain.</p>
+      </div>
+      <div class="ambassador-card reveal">
+        <div class="ambassador-tag" data-i18n="ambassador.tag2">Diplomatie</div>
+        <h3 data-i18n="ambassador.t2">Sommets internationaux</h3>
+        <p data-i18n="ambassador.d2">Invitée d'honneur de sommets et conférences internationales, où elle porte la voix du cinéma et de l'entrepreneuriat congolais.</p>
+      </div>
+      <div class="ambassador-card reveal">
+        <div class="ambassador-tag" data-i18n="ambassador.tag3">Mode &amp; Culture</div>
+        <h3>ENMODA</h3>
+        <p data-i18n="ambassador.d3">Présence et engagement aux côtés d'ENMODA, plateforme panafricaine dédiée à la mode et à la créativité.</p>
+      </div>
+      <div class="ambassador-card reveal">
+        <div class="ambassador-tag" data-i18n="ambassador.tag4">Représentation</div>
+        <h3 data-i18n="ambassador.t4">RDC au Nigeria</h3>
+        <p data-i18n="ambassador.d4">Représentante de la République Démocratique du Congo lors d'événements panafricains majeurs organisés au Nigeria.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="section-divider"><div class="jk-divider"><span class="jk-monogram">J · K</span></div></div>
+
+<!-- MÉDIAS & APPARITIONS -->
+<section id="medias" style="background:var(--white);">
+  <div style="max-width:1200px;margin:0 auto;">
+    <span class="section-eyebrow reveal" data-i18n="medias.eyebrow">Médias</span>
+    <h2 class="section-title reveal" data-i18n="medias.title">Médias &amp; <em>Apparitions</em></h2>
+    <p class="reveal" style="color:var(--gray);max-width:600px;margin-bottom:3rem;line-height:1.8;font-size:0.9rem;font-weight:300;" data-i18n="medias.intro">Retrouvez les temps forts de son parcours : interviews, presse, événements publics et apparitions médiatiques.</p>
+
+    <!-- Galerie photos — structure prête, à compléter -->
+    <h3 class="cinema-subtitle reveal" data-i18n="medias.galleryTitle">Galerie</h3>
+    <div class="set-gallery" style="margin-bottom:3.5rem;">
+      <div class="set-gallery-item reveal"></div>
+      <div class="set-gallery-item reveal"></div>
+      <div class="set-gallery-item reveal"></div>
+      <div class="set-gallery-item reveal"></div>
+      <div class="set-gallery-item reveal"></div>
+      <div class="set-gallery-item reveal"></div>
+    </div>
+
+    <!-- Presse / Interviews — structure prête, à compléter -->
+    <h3 class="cinema-subtitle reveal" data-i18n="medias.pressTitle">Presse &amp; Interviews</h3>
+    <div class="press-list">
+      <a href="#" class="press-item reveal">
+        <span class="press-source" data-i18n="medias.sourceLabel">Nom du média</span>
+        <span class="press-title" data-i18n="medias.articleLabel">Titre de l'article ou de l'interview</span>
+        <span class="press-arrow">→</span>
+      </a>
+      <a href="#" class="press-item reveal">
+        <span class="press-source" data-i18n="medias.sourceLabel">Nom du média</span>
+        <span class="press-title" data-i18n="medias.articleLabel">Titre de l'article ou de l'interview</span>
+        <span class="press-arrow">→</span>
+      </a>
+      <a href="#" class="press-item reveal">
+        <span class="press-source" data-i18n="medias.sourceLabel">Nom du média</span>
+        <span class="press-title" data-i18n="medias.articleLabel">Titre de l'article ou de l'interview</span>
+        <span class="press-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="section-divider" style="background:var(--dark);"><div class="jk-divider" style="border-color:rgba(255,255,255,0.1);"><span class="jk-monogram">J · K</span></div></div>
+
+<!-- AU-DELÀ DES PROJECTEURS — section personnelle -->
+<section id="personnel" class="personal-section">
+  <div class="personal-grid">
+    <div class="personal-text reveal-left">
+      <span class="section-eyebrow" style="color:var(--gold);" data-i18n="personal.eyebrow">Intimité</span>
+      <h2 class="section-title" style="color:var(--white);" data-i18n="personal.title">Au-delà des <em>projecteurs</em></h2>
+      <p data-i18n="personal.p1">Derrière la productrice et la femme d'affaires, Jolie Kenda est avant tout une mère et une épouse, profondément attachée à ses valeurs familiales.</p>
+      <p data-i18n="personal.p2">Elle puise dans cet équilibre de vie la force et l'inspiration qui nourrissent chacun de ses engagements publics — et porte, pour la jeunesse congolaise, le message qu'ambition et authenticité peuvent avancer ensemble.</p>
+    </div>
+    <div class="personal-quote-block reveal-right">
+      <blockquote data-i18n="personal.quote">« Ce que je construis aujourd'hui, je le construis aussi pour mes enfants — et pour tous ceux qui croient encore que le Congo peut rayonner. »</blockquote>
     </div>
   </div>
 </section>
@@ -1596,12 +2190,12 @@
 
 <!-- VISION -->
 <section class="vision-section" id="vision">
-  <span class="section-eyebrow reveal" style="color:var(--gold);">Vision</span>
-  <blockquote class="vision-quote reveal">
+  <span class="section-eyebrow reveal" style="color:var(--gold);" data-i18n="vision.eyebrow">Vision</span>
+  <blockquote class="vision-quote reveal" data-i18n="vision.quote">
     Au-delà de ses accomplissements, Jolie Kenda bâtit <em>un mouvement durable</em>,<br/>
     transformant son influence en un levier de progrès pour toute une génération.
   </blockquote>
-  <p class="vision-attr reveal">Une légende vivante · RDC</p>
+  <p class="vision-attr reveal" data-i18n="vision.attr">Une légende vivante · RDC</p>
 </section>
 
 <!-- DIVIDER -->
@@ -1614,13 +2208,13 @@
       <img src="contact.jpg" alt="Jolie Kenda" style="object-position:top center;"/>
     </div>
     <div class="reveal-right">
-      <span class="section-eyebrow">Contact</span>
-      <h2 class="section-title">Travaillons<br/><em>ensemble</em></h2>
+      <span class="section-eyebrow" data-i18n="nav.contact">Contact</span>
+      <h2 class="section-title" data-i18n="contact.title">Travaillons<br/><em>ensemble</em></h2>
       <p class="contact-email">collywood.collab@gmail.com</p>
-      <p style="color:var(--gray);font-size:0.85rem;line-height:1.8;font-weight:300;">Pour toute collaboration, partenariat ou demande presse. Deux façons de nous rejoindre :</p>
+      <p style="color:var(--gray);font-size:0.85rem;line-height:1.8;font-weight:300;" data-i18n="contact.intro">Pour toute collaboration, partenariat ou demande presse. Deux façons de nous rejoindre :</p>
       <div class="contact-actions">
-        <button class="btn btn-gold" onclick="openModal('modal-postuler')">→ Postuler — Envoyer son CV</button>
-        <button class="btn btn-outline" onclick="openModal('modal-propositions')">Proposer une idée ou un projet</button>
+        <button class="btn btn-gold" onclick="openModal('modal-postuler')" data-i18n="contact.cta1">→ Postuler — Envoyer son CV</button>
+        <button class="btn btn-outline" onclick="openModal('modal-propositions')" data-i18n="contact.cta2">Proposer une idée ou un projet</button>
         </div>
       <div class="social-links">
         <a href="https://www.tiktok.com/@kendajoliejolie?_r=1&_t=ZS-97KK52z2YRr" target="_blank" title="TikTok">
@@ -1727,6 +2321,256 @@
 </div>
 
 <script>
+  // ──────────────────────────────────────────────────────────────
+  // SYSTÈME DE TRADUCTION FR/EN — sans dépendance externe
+  // Traduit l'affichage uniquement (le HTML source reste en français
+  // pour le SEO). Persiste le choix de langue via localStorage.
+  // ──────────────────────────────────────────────────────────────
+  const translations = {
+    fr: {
+      'nav.about': 'À propos',
+      'nav.cinema': 'Collywood',
+      'nav.fondation': 'Fondation',
+      'nav.contact': 'Contact',
+      'menu.collab': 'Collab',
+      'menu.ambassador': 'Ambassadrice',
+      'menu.vision': 'Vision',
+      'menu.proposeIdea': 'Proposer une idée',
+      'menu.apply': 'Postuler',
+      'hero.label': 'Actrice · Productrice · Entrepreneure · Philanthrope',
+      'hero.sub': 'Fondatrice de Collywood — Construire le cinéma congolais de demain',
+      'hero.cta1': 'Découvrir mon parcours',
+      'about.eyebrow': 'À propos',
+      'about.title': 'Permettez-moi de me <em>présenter</em>',
+      'about.p1': "Titulaire d'un Master en Management Public, Jolie Kenda incarne l'excellence et l'engagement au service du développement.",
+      'about.p2': "Figure emblématique de la nouvelle génération africaine, elle a su conjuguer une carrière politique de haut vol — marquée par son mandat de députée nationale en République Démocratique du Congo et la fondation du Parti du Peuple Congolais (PPEC) — avec une audace entrepreneuriale visionnaire.",
+      'about.p3': "Femme de conviction, elle place l'intérêt collectif au cœur de ses actions, convaincue que « savoir perdre à titre personnel est le gage pour gagner à titre collectif ».",
+      'about.p4': "Au-delà de la sphère politique, elle s'est imposée comme une icône de la culture et des médias. Fondatrice de COLLYWOOD, productrice de cinéma et actrice, elle a insufflé une signature glamour et innovante au 7ème art congolais.",
+      'about.p5': "Surnommée « la Légende », cette mère engagée, épouse et leader, porte en elle la promesse d'une Afrique moderne, résiliente et fière.",
+      'about.p6': "Elle ne se contente pas de naviguer dans son époque : elle la façonne par son intégrité, sa discipline et une volonté inébranlable de transformer le leadership féminin en un véritable moteur de progrès social.",
+      'parcours.eyebrow': 'Parcours',
+      'parcours.title': 'Une trajectoire au service du <em>Congo</em>',
+      'parcours.y1': 'Engagement public', 'parcours.t1': 'Députée nationale de la RDC',
+      'parcours.d1': "Jolie Kenda entame son parcours au service de la nation en tant que députée nationale, portant la voix de ses concitoyens au sein des institutions de la République Démocratique du Congo.",
+      'parcours.y2': 'Transition', 'parcours.t2': "Vers l'entrepreneuriat culturel",
+      'parcours.d2': "Forte de son expérience politique et de sa connaissance du terrain, elle oriente son énergie vers la culture et l'économie créative, convaincue que le cinéma peut devenir un moteur de développement national.",
+      'parcours.y3': 'Fondation', 'parcours.t3': 'Création de Collywood',
+      'parcours.d3': "Elle fonde Collywood Production, avec l'ambition de bâtir une véritable industrie cinématographique congolaise capable de rivaliser avec les standards internationaux.",
+      'parcours.y4': 'Rayonnement', 'parcours.t4': 'Influence nationale et internationale',
+      'parcours.d4': "Productrice, actrice et femme d'affaires reconnue, elle représente aujourd'hui la RDC sur des scènes panafricaines et internationales, en tant qu'ambassadrice du cinéma et de la culture congolaise.",
+      'parcours.y5': "Aujourd'hui", 'parcours.t5': 'Leader culturelle et philanthrope',
+      'parcours.d5': "À la tête de Collywood et de sa fondation, elle poursuit une mission qui dépasse le cinéma : faire rayonner l'identité congolaise et ouvrir des opportunités pour la jeunesse, les femmes et les talents de demain.",
+      'stats.eyebrow': 'Audience',
+      'stats.title': 'Un rayonnement de <em>continent</em>',
+      'cinema.title': "Bâtir l'industrie du cinéma <em>congolais</em>",
+      'cinema.intro': "Collywood n'est pas une simple maison de production. C'est le projet d'une vie : créer une véritable industrie cinématographique congolaise, capable de représenter la République Démocratique du Congo au niveau mondial — à l'image de Hollywood, Bollywood et Nollywood.",
+      'cinema.visionLabel': 'Vision',
+      'cinema.visionText': "Faire du Congo une référence cinématographique africaine, où les talents locaux peuvent créer, produire et exporter des œuvres reconnues à l'international.",
+      'cinema.missionLabel': 'Mission',
+      'cinema.missionText': "Produire des films ambitieux, former une nouvelle génération de talents congolais, et bâtir les infrastructures durables d'une véritable industrie créative nationale.",
+      'cinema.productions': 'Productions',
+      'cinema.talentsTitle': 'Talents',
+      'cinema.talentsIntro': "Collywood révèle et accompagne une nouvelle génération d'acteurs, réalisateurs et techniciens congolais.",
+      'cinema.galleryTitle': 'Galerie de tournage',
+      'business.eyebrow': 'Business',
+      'business.title': 'Vision <em>entrepreneuriale</em>',
+      'business.intro': "Au-delà du cinéma, Jolie Kenda incarne un leadership entrepreneurial au service du développement économique congolais — convaincue que l'audace et l'intégrité sont les véritables moteurs du progrès.",
+      'business.t1': 'Entreprises',
+      'business.d1': "À la tête de plusieurs structures, dont Collywood Production, elle pilote des projets à l'intersection du cinéma, du commerce et de la culture.",
+      'business.t2': 'Partenariats',
+      'business.d2': "Elle construit des alliances stratégiques avec des marques, institutions et acteurs panafricains pour accélérer le rayonnement du cinéma congolais.",
+      'business.t3': 'Leadership',
+      'business.d3': "Issue du monde politique, elle applique au monde des affaires une rigueur et une vision stratégique forgées au service de l'intérêt collectif.",
+      'collab.eyebrow': 'Collaborations',
+      'collab.title': 'Travailler avec <em>Jolie</em>',
+      'collab.t1': 'Intégration Cinéma',
+      'collab.d1': "Placement naturel de votre marque dans une production Collywood, pour toucher des millions de spectateurs fidèles.",
+      'collab.t2': 'Contenu Digital',
+      'collab.d2': "Création d'un contenu authentique et engageant sur TikTok, Instagram ou YouTube, adapté à votre identité de marque.",
+      'collab.t3': 'Ambassade de Marque',
+      'collab.d3': "Un partenariat durable où Jolie Kenda représente vos valeurs avec élégance et crédibilité auprès de sa communauté.",
+      'collab.t4': 'Présence Événementielle',
+      'collab.d4': "Invitation, prise de parole ou co-animation lors de vos événements privés, galas ou lancements de produits.",
+      'fondation.eyebrow': 'Fondation',
+      'fondation.title': 'Engagement &amp; <em>Action</em>',
+      'fondation.intro': "Présidente de la Fondation Jolie Kenda, elle transforme l'influence en action concrète. Sa communauté « Les Mignonnettes » rayonne de la RDC jusqu'en France, aux États-Unis et en Afrique du Sud.",
+      'fondation.c1': 'Encadrement et formation des jeunes',
+      'fondation.c2': 'Autonomisation des femmes',
+      'fondation.c3': 'Inclusion et handicap',
+      'fondation.c4': 'Assistance aux orphelins',
+      'fondation.c5': 'Formation aux métiers du cinéma',
+      'fondation.pillarsTitle': "Nos domaines d'action",
+      'fondation.p1Title': 'Jeunesse', 'fondation.p1Text': "Encadrement, mentorat et ouverture d'opportunités pour la jeunesse congolaise.",
+      'fondation.p2Title': 'Femmes', 'fondation.p2Text': "Programmes d'autonomisation économique et de leadership féminin.",
+      'fondation.p3Title': 'Culture', 'fondation.p3Text': "Formation aux métiers du cinéma et valorisation du patrimoine congolais.",
+      'fondation.p4Title': 'Éducation', 'fondation.p4Text': "Soutien scolaire et accès à l'éducation pour les enfants vulnérables.",
+      'fondation.impact1': 'Bénéficiaires accompagnés',
+      'fondation.impact2': 'Programmes actifs',
+      'fondation.impact3': 'Villes touchées',
+      'ambassador.eyebrow': 'Rayonnement',
+      'ambassador.title': 'Rayonner au-delà des <em>frontières</em>',
+      'ambassador.intro': "Ambassadrice du cinéma et de la culture congolaise, Jolie Kenda représente la République Démocratique du Congo sur les scènes panafricaines et internationales, tissant des ponts entre les industries créatives du continent.",
+      'ambassador.tag1': 'Marque',
+      'ambassador.d1': "Ambassadrice de la campagne Camon 50 de Tecno, portant l'image de la marque auprès du public congolais et africain.",
+      'ambassador.tag2': 'Diplomatie', 'ambassador.t2': 'Sommets internationaux',
+      'ambassador.d2': "Invitée d'honneur de sommets et conférences internationales, où elle porte la voix du cinéma et de l'entrepreneuriat congolais.",
+      'ambassador.tag3': 'Mode &amp; Culture',
+      'ambassador.d3': "Présence et engagement aux côtés d'ENMODA, plateforme panafricaine dédiée à la mode et à la créativité.",
+      'ambassador.tag4': 'Représentation', 'ambassador.t4': 'RDC au Nigeria',
+      'ambassador.d4': "Représentante de la République Démocratique du Congo lors d'événements panafricains majeurs organisés au Nigeria.",
+      'medias.eyebrow': 'Médias',
+      'medias.title': 'Médias &amp; <em>Apparitions</em>',
+      'medias.intro': "Retrouvez les temps forts de son parcours : interviews, presse, événements publics et apparitions médiatiques.",
+      'medias.galleryTitle': 'Galerie',
+      'medias.pressTitle': 'Presse &amp; Interviews',
+      'medias.sourceLabel': 'Nom du média',
+      'medias.articleLabel': "Titre de l'article ou de l'interview",
+      'personal.eyebrow': 'Intimité',
+      'personal.title': 'Au-delà des <em>projecteurs</em>',
+      'personal.p1': "Derrière la productrice et la femme d'affaires, Jolie Kenda est avant tout une mère et une épouse, profondément attachée à ses valeurs familiales.",
+      'personal.p2': "Elle puise dans cet équilibre de vie la force et l'inspiration qui nourrissent chacun de ses engagements publics — et porte, pour la jeunesse congolaise, le message qu'ambition et authenticité peuvent avancer ensemble.",
+      'personal.quote': "« Ce que je construis aujourd'hui, je le construis aussi pour mes enfants — et pour tous ceux qui croient encore que le Congo peut rayonner. »",
+      'vision.eyebrow': 'Vision',
+      'vision.quote': "Au-delà de ses accomplissements, Jolie Kenda bâtit <em>un mouvement durable</em>,<br/>transformant son influence en un levier de progrès pour toute une génération.",
+      'vision.attr': 'Une légende vivante · RDC',
+      'contact.title': 'Travaillons<br/><em>ensemble</em>',
+      'contact.intro': 'Pour toute collaboration, partenariat ou demande presse. Deux façons de nous rejoindre :',
+      'contact.cta1': '→ Postuler — Envoyer son CV',
+      'contact.cta2': 'Proposer une idée ou un projet',
+    },
+    en: {
+      'nav.about': 'About',
+      'nav.cinema': 'Collywood',
+      'nav.fondation': 'Foundation',
+      'nav.contact': 'Contact',
+      'menu.collab': 'Collab',
+      'menu.ambassador': 'Ambassador',
+      'menu.vision': 'Vision',
+      'menu.proposeIdea': 'Propose an idea',
+      'menu.apply': 'Apply',
+      'hero.label': 'Actress · Producer · Entrepreneur · Philanthropist',
+      'hero.sub': 'Founder of Collywood — Building the Congolese cinema of tomorrow',
+      'hero.cta1': 'Discover my journey',
+      'about.eyebrow': 'About',
+      'about.title': 'Allow me to <em>introduce myself</em>',
+      'about.p1': "Holder of a Master's degree in Public Management, Jolie Kenda embodies excellence and commitment to development.",
+      'about.p2': "An emblematic figure of the new African generation, she has combined a high-level political career — marked by her term as a national deputy in the Democratic Republic of Congo and the founding of the Congolese People's Party (PPEC) — with visionary entrepreneurial boldness.",
+      'about.p3': "A woman of conviction, she places the collective interest at the heart of her actions, convinced that \"knowing how to lose personally is the price of winning collectively.\"",
+      'about.p4': "Beyond the political sphere, she has established herself as an icon of culture and media. Founder of COLLYWOOD, film producer and actress, she has brought a glamorous and innovative signature to Congolese cinema.",
+      'about.p5': "Nicknamed \"the Legend,\" this devoted mother, wife and leader carries within her the promise of a modern, resilient and proud Africa.",
+      'about.p6': "She does not simply navigate her era: she shapes it through her integrity, discipline and unwavering will to turn female leadership into a true engine of social progress.",
+      'parcours.eyebrow': 'Journey',
+      'parcours.title': 'A path in service of the <em>Congo</em>',
+      'parcours.y1': 'Public service', 'parcours.t1': 'National Deputy of the DRC',
+      'parcours.d1': "Jolie Kenda begins her journey serving the nation as a national deputy, carrying the voice of her fellow citizens within the institutions of the Democratic Republic of Congo.",
+      'parcours.y2': 'Transition', 'parcours.t2': 'Toward cultural entrepreneurship',
+      'parcours.d2': "Drawing on her political experience and grassroots knowledge, she redirects her energy toward culture and the creative economy, convinced that cinema can become a driver of national development.",
+      'parcours.y3': 'Founding', 'parcours.t3': 'Creation of Collywood',
+      'parcours.d3': "She founds Collywood Production, with the ambition of building a true Congolese film industry capable of competing with international standards.",
+      'parcours.y4': 'Influence', 'parcours.t4': 'National and international reach',
+      'parcours.d4': "A recognized producer, actress and businesswoman, she now represents the DRC on pan-African and international stages as an ambassador for Congolese cinema and culture.",
+      'parcours.y5': 'Today', 'parcours.t5': 'Cultural leader and philanthropist',
+      'parcours.d5': "At the helm of Collywood and her foundation, she pursues a mission that goes beyond cinema: showcasing Congolese identity and opening opportunities for the youth, women and talents of tomorrow.",
+      'stats.eyebrow': 'Audience',
+      'stats.title': 'A continental <em>reach</em>',
+      'cinema.title': "Building the Congolese <em>film industry</em>",
+      'cinema.intro': "Collywood is not just a production company. It is the project of a lifetime: building a true Congolese film industry, capable of representing the Democratic Republic of Congo on a global scale — in the image of Hollywood, Bollywood and Nollywood.",
+      'cinema.visionLabel': 'Vision',
+      'cinema.visionText': "Making Congo an African cinematic reference, where local talents can create, produce and export works recognized internationally.",
+      'cinema.missionLabel': 'Mission',
+      'cinema.missionText': "Producing ambitious films, training a new generation of Congolese talent, and building the lasting infrastructure of a true national creative industry.",
+      'cinema.productions': 'Productions',
+      'cinema.talentsTitle': 'Talents',
+      'cinema.talentsIntro': "Collywood discovers and supports a new generation of Congolese actors, directors and technicians.",
+      'cinema.galleryTitle': 'Behind the scenes',
+      'business.eyebrow': 'Business',
+      'business.title': 'Entrepreneurial <em>vision</em>',
+      'business.intro': "Beyond cinema, Jolie Kenda embodies entrepreneurial leadership in service of Congolese economic development — convinced that boldness and integrity are the true engines of progress.",
+      'business.t1': 'Companies',
+      'business.d1': "At the helm of several structures, including Collywood Production, she leads projects at the intersection of cinema, business and culture.",
+      'business.t2': 'Partnerships',
+      'business.d2': "She builds strategic alliances with brands, institutions and pan-African players to accelerate the reach of Congolese cinema.",
+      'business.t3': 'Leadership',
+      'business.d3': "Coming from the political world, she applies to business a rigor and strategic vision forged in service of the collective interest.",
+      'collab.eyebrow': 'Collaborations',
+      'collab.title': 'Work with <em>Jolie</em>',
+      'collab.t1': 'Film Integration',
+      'collab.d1': "Natural placement of your brand within a Collywood production, reaching millions of loyal viewers.",
+      'collab.t2': 'Digital Content',
+      'collab.d2': "Creation of authentic, engaging content on TikTok, Instagram or YouTube, tailored to your brand identity.",
+      'collab.t3': 'Brand Ambassadorship',
+      'collab.d3': "A lasting partnership where Jolie Kenda represents your values with elegance and credibility before her community.",
+      'collab.t4': 'Event Presence',
+      'collab.d4': "Invitation, keynote speaking or co-hosting for your private events, galas or product launches.",
+      'fondation.eyebrow': 'Foundation',
+      'fondation.title': 'Commitment &amp; <em>Action</em>',
+      'fondation.intro': "President of the Jolie Kenda Foundation, she turns influence into concrete action. Her community \"Les Mignonnettes\" reaches from the DRC to France, the United States and South Africa.",
+      'fondation.c1': 'Youth mentoring and training',
+      'fondation.c2': "Women's empowerment",
+      'fondation.c3': 'Inclusion and disability support',
+      'fondation.c4': 'Support for orphans',
+      'fondation.c5': 'Training in film professions',
+      'fondation.pillarsTitle': 'Our areas of action',
+      'fondation.p1Title': 'Youth', 'fondation.p1Text': "Mentoring and opening opportunities for Congolese youth.",
+      'fondation.p2Title': 'Women', 'fondation.p2Text': "Economic empowerment and female leadership programs.",
+      'fondation.p3Title': 'Culture', 'fondation.p3Text': "Training in film professions and promotion of Congolese heritage.",
+      'fondation.p4Title': 'Education', 'fondation.p4Text': "Academic support and access to education for vulnerable children.",
+      'fondation.impact1': 'Beneficiaries supported',
+      'fondation.impact2': 'Active programs',
+      'fondation.impact3': 'Cities reached',
+      'ambassador.eyebrow': 'Outreach',
+      'ambassador.title': 'Reaching beyond <em>borders</em>',
+      'ambassador.intro': "Ambassador for Congolese cinema and culture, Jolie Kenda represents the Democratic Republic of Congo on pan-African and international stages, building bridges between the continent's creative industries.",
+      'ambassador.tag1': 'Brand',
+      'ambassador.d1': "Ambassador for Tecno's Camon 50 campaign, carrying the brand's image to Congolese and African audiences.",
+      'ambassador.tag2': 'Diplomacy', 'ambassador.t2': 'International summits',
+      'ambassador.d2': "Guest of honor at international summits and conferences, where she carries the voice of Congolese cinema and entrepreneurship.",
+      'ambassador.tag3': 'Fashion &amp; Culture',
+      'ambassador.d3': "Presence and engagement alongside ENMODA, a pan-African platform dedicated to fashion and creativity.",
+      'ambassador.tag4': 'Representation', 'ambassador.t4': 'DRC in Nigeria',
+      'ambassador.d4': "Representing the Democratic Republic of Congo at major pan-African events held in Nigeria.",
+      'medias.eyebrow': 'Media',
+      'medias.title': 'Media &amp; <em>Appearances</em>',
+      'medias.intro': "Discover the highlights of her journey: interviews, press, public events and media appearances.",
+      'medias.galleryTitle': 'Gallery',
+      'medias.pressTitle': 'Press &amp; Interviews',
+      'medias.sourceLabel': 'Media outlet name',
+      'medias.articleLabel': 'Article or interview title',
+      'personal.eyebrow': 'Personal Life',
+      'personal.title': 'Beyond the <em>spotlight</em>',
+      'personal.p1': "Behind the producer and businesswoman, Jolie Kenda is above all a mother and a wife, deeply attached to her family values.",
+      'personal.p2': "She draws from this balance the strength and inspiration that nurture each of her public commitments — carrying, for Congolese youth, the message that ambition and authenticity can move forward together.",
+      'personal.quote': "\"What I am building today, I am building for my children too — and for everyone who still believes Congo can shine.\"",
+      'vision.eyebrow': 'Vision',
+      'vision.quote': "Beyond her achievements, Jolie Kenda is building <em>a lasting movement</em>,<br/>turning her influence into a driving force for progress for an entire generation.",
+      'vision.attr': 'A living legend · DRC',
+      'contact.title': "Let's work<br/><em>together</em>",
+      'contact.intro': 'For any collaboration, partnership or press inquiry. Two ways to reach us:',
+      'contact.cta1': '→ Apply — Send your CV',
+      'contact.cta2': 'Propose an idea or project',
+    }
+  };
+
+  function setLang(lang) {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      const text = translations[lang] && translations[lang][key];
+      if (text) el.innerHTML = text;
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.setAttribute('lang', lang);
+    try { localStorage.setItem('jk-lang', lang); } catch(e) {}
+  }
+
+  // Restaure la langue choisie précédemment, sinon reste en français par défaut
+  (function initLang() {
+    let saved = 'fr';
+    try { saved = localStorage.getItem('jk-lang') || 'fr'; } catch(e) {}
+    if (saved === 'en') setLang('en');
+  })();
+
   // MENU BURGER
   function toggleMenu() {
     document.getElementById('menu-panel').classList.toggle('active');
