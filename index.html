@@ -8,6 +8,8 @@
   <meta name="keywords" content="Jolie Kenda, Collywood, cinéma congolais, productrice RDC, actrice congolaise, fondation Jolie Kenda, ambassadrice Tecno Camon 50, cinéma africain"/>
   <meta name="author" content="Jolie Kenda"/>
   <link rel="canonical" href="https://jolie-kenda-site.vercel.app/"/>
+  <meta name="theme-color" content="#0C0C0C"/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230C0C0C'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='26' fill='%23B8963E'%3EJK%3C/text%3E%3C/svg%3E"/>
 
   <!-- Open Graph (Facebook, LinkedIn, WhatsApp...) -->
   <meta property="og:type" content="website"/>
@@ -90,6 +92,7 @@
       white-space: nowrap;
     }
     @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .ticker-wrap:hover .ticker-track { animation-play-state: paused; }
     @media (max-width: 480px) {
       .ticker-track span { font-size: 0.85rem; letter-spacing: 0.12em; padding: 0 1.2rem; }
     }
@@ -297,7 +300,10 @@
     }
     @keyframes fadeInHero { 0% { opacity: 0; } 100% { opacity: 1; } }
     @media (prefers-reduced-motion: reduce) {
-      .hero, .reveal, .reveal-left, .reveal-right { opacity: 1 !important; animation: none !important; transform: none !important; }
+      .hero, .reveal, .reveal-left, .reveal-right, .reveal-on-scroll, .hero-label, .hero-title, .hero-rule, .hero-sub, .hero-actions, .hero-social { opacity: 1 !important; animation: none !important; transform: none !important; }
+      .ticker-track, .hero-image img, .tiktok-thumb::before, .clap-curtain, .clap-curtain * { animation: none !important; }
+      .clap-curtain { display: none !important; }
+      html { scroll-behavior: auto; }
     }
     .hero-text {
       display: flex;
@@ -1890,11 +1896,438 @@
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .cinema-grid { grid-template-columns: 1fr 1fr; }
     }
+
+    /* ══════════════ AMÉLIORATIONS v2 ══════════════ */
+
+    /* ── LIEN D'ÉVITEMENT (accessibilité) ── */
+    .skip-link {
+      position: fixed;
+      top: -60px; left: 1rem;
+      z-index: 300;
+      background: var(--black);
+      color: var(--gold-light);
+      padding: 0.7rem 1.2rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 0 0 4px 4px;
+      transition: top 0.3s;
+    }
+    .skip-link:focus { top: 0; }
+
+    /* ── BARRE DE PROGRESSION DE LECTURE ── */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      z-index: 102;
+      background: transparent;
+      pointer-events: none;
+    }
+    .scroll-progress span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(to right, var(--gold), var(--gold-light));
+    }
+
+    /* ── NAV AU SCROLL ── */
+    nav.scrolled {
+      box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+      padding-top: 0.8rem;
+      padding-bottom: 0.8rem;
+    }
+    .nav-links a.active-link { color: var(--gold); }
+
+    /* ── BOUTON RETOUR EN HAUT ── */
+    .back-to-top {
+      position: fixed;
+      bottom: 1.6rem; right: 1.6rem;
+      z-index: 140;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: var(--black);
+      color: var(--gold-light);
+      border: 1px solid rgba(184,150,62,0.4);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(14px);
+      pointer-events: none;
+      transition: opacity 0.35s ease, transform 0.35s ease, background 0.25s;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    }
+    .back-to-top.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .back-to-top:hover { background: var(--gold); color: var(--white); }
+
+    /* ── BRILLANCE SUR BOUTONS OR ── */
+    .btn-gold { position: relative; overflow: hidden; }
+    .btn-gold::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -80%;
+      width: 50%; height: 100%;
+      background: linear-gradient(105deg, transparent, rgba(255,255,255,0.35), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.6s ease;
+      pointer-events: none;
+    }
+    .btn-gold:hover::after { left: 130%; }
+
+    /* ── PULSATION DES POINTS DE TIMELINE ── */
+    .timeline-item.visible .timeline-dot { animation: dotPulse 2.4s ease-out 0.4s 2; }
+    @keyframes dotPulse {
+      0% { box-shadow: 0 0 0 0 rgba(184,150,62,0.5); }
+      70% { box-shadow: 0 0 0 9px rgba(184,150,62,0); }
+      100% { box-shadow: 0 0 0 0 rgba(184,150,62,0); }
+    }
+
+    /* ── SECTION CASTING ── */
+    .casting-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .casting-step {
+      border: 1px solid #f0eee9;
+      border-radius: 6px;
+      background: var(--white);
+      padding: 2rem 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .casting-step:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.07); }
+    .casting-step-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .casting-step h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+    .casting-step p {
+      font-size: 0.8rem;
+      color: var(--gray);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .casting-banner {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+      flex-wrap: wrap;
+      background: linear-gradient(135deg, #141414, #0C0C0C);
+      border: 1px solid rgba(184,150,62,0.35);
+      border-radius: 8px;
+      padding: 2.2rem 2.5rem;
+      margin-bottom: 3rem;
+    }
+    .casting-banner-icon { color: var(--gold); flex-shrink: 0; }
+    .casting-banner-body { flex: 1; min-width: 260px; }
+    .casting-banner h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      margin-bottom: 0.5rem;
+    }
+    .casting-banner p {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.8;
+      font-weight: 300;
+      margin: 0;
+    }
+    .casting-faq { max-width: 820px; }
+    .faq-item {
+      border-bottom: 1px solid var(--gray-light);
+    }
+    .faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.2rem 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--black);
+      transition: color 0.2s;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '+';
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 1.3rem;
+      color: var(--gold);
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+    .faq-item[open] summary { color: var(--gold); }
+    .faq-item[open] summary::after { transform: rotate(45deg); }
+    .faq-item p {
+      font-size: 0.83rem;
+      color: var(--gray);
+      line-height: 1.8;
+      font-weight: 300;
+      padding: 0 2rem 1.3rem 0;
+      margin: 0;
+    }
+    @media (max-width: 768px) {
+      .casting-steps { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .casting-banner { padding: 1.8rem 1.4rem; gap: 1.2rem; }
+    }
+    @media (max-width: 480px) {
+      .casting-steps { grid-template-columns: 1fr; }
+    }
+
+    /* ── NOTE CASTING DANS LE MODAL ── */
+    .casting-guarantee {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      background: linear-gradient(135deg, #141414, #0C0C0C);
+      border: 1px solid rgba(184,150,62,0.4);
+      border-radius: 4px;
+      padding: 1.2rem;
+      margin-bottom: 1.6rem;
+    }
+    .casting-guarantee svg { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+    .casting-guarantee-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      margin-bottom: 0.35rem;
+    }
+    .casting-guarantee p {
+      font-size: 0.76rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      font-weight: 300;
+      margin: 0;
+    }
+
+    /* ── PAIEMENT FLEXPAY (MODAL) ── */
+    .pay-methods {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-bottom: 1.1rem;
+    }
+    .pay-method {
+      position: relative;
+      border: 1px solid var(--gray-light);
+      border-radius: 4px;
+      background: var(--white);
+      padding: 1rem;
+      cursor: pointer;
+      text-align: center;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .pay-method input { position: absolute; opacity: 0; pointer-events: none; }
+    .pay-method svg { color: var(--gray); margin-bottom: 0.4rem; transition: color 0.25s; }
+    .pay-method-name {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--black);
+      letter-spacing: 0.04em;
+    }
+    .pay-method small {
+      display: block;
+      font-size: 0.62rem;
+      color: var(--gray);
+      margin-top: 0.25rem;
+      font-weight: 300;
+    }
+    .pay-method.active {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px var(--gold), 0 4px 15px rgba(184,150,62,0.12);
+    }
+    .pay-method.active svg { color: var(--gold); }
+    .pay-status {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+      background: rgba(184,150,62,0.06);
+      border: 1px solid rgba(184,150,62,0.3);
+      border-radius: 4px;
+      padding: 1rem 1.1rem;
+      margin: 1rem 0 0.4rem;
+      font-size: 0.8rem;
+      color: var(--black);
+      line-height: 1.6;
+    }
+    .pay-status[hidden] { display: none; }
+    .pay-status.error { background: rgba(180,40,40,0.05); border-color: rgba(180,40,40,0.35); }
+    .pay-status a { color: var(--gold); font-weight: 500; }
+    .pay-spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(184,150,62,0.25);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+      animation: paySpin 0.9s linear infinite;
+    }
+    @keyframes paySpin { to { transform: rotate(360deg); } }
+    .form-submit:disabled { opacity: 0.6; cursor: wait; }
+
+    /* ── COPIE E-MAIL ── */
+    .copy-email-btn {
+      background: none;
+      border: 1px solid var(--gray-light);
+      border-radius: 3px;
+      color: var(--gray);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.55rem;
+      margin-left: 0.6rem;
+      cursor: pointer;
+      vertical-align: middle;
+      transition: color 0.2s, border-color 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .copy-email-btn:hover { color: var(--gold); border-color: var(--gold); }
+
+    /* ── SUPPORT CV / WHATSAPP ── */
+    .support-box {
+      display: flex;
+      gap: 0.9rem;
+      align-items: flex-start;
+      background: rgba(37,211,102,0.05);
+      border: 1px solid rgba(37,211,102,0.35);
+      border-radius: 4px;
+      padding: 1rem 1.1rem;
+      margin-top: 1.2rem;
+      text-align: left;
+    }
+    .support-box[hidden] { display: none; }
+    .support-box > svg { color: #25D366; flex-shrink: 0; margin-top: 2px; }
+    .support-box strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.02rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      color: var(--black);
+    }
+    .support-box p {
+      font-size: 0.74rem;
+      color: var(--gray);
+      line-height: 1.7;
+      font-weight: 300;
+      margin: 0;
+    }
+    .support-box p a { color: var(--gold); }
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-top: 0.7rem;
+      background: #25D366;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.5rem 0.9rem;
+      border-radius: 3px;
+      transition: background 0.2s;
+      font-weight: 400;
+    }
+    .btn-wa:hover { background: #1eb857; }
+
+    /* ══════════════ ANIMATIONS v3 ══════════════ */
+
+    /* Révélations en cascade dans les grilles */
+    .casting-steps > *:nth-child(2), .pillars-grid > *:nth-child(2), .ambassador-grid > *:nth-child(2),
+    .business-grid > *:nth-child(2), .collab-grid > *:nth-child(2), .talents-grid > *:nth-child(2),
+    .cinema-grid > *:nth-child(2), .stats-grid > *:nth-child(2), .tiktok-grid > *:nth-child(2) { transition-delay: 0.08s; }
+    .casting-steps > *:nth-child(3), .pillars-grid > *:nth-child(3), .ambassador-grid > *:nth-child(3),
+    .business-grid > *:nth-child(3), .collab-grid > *:nth-child(3), .talents-grid > *:nth-child(3),
+    .cinema-grid > *:nth-child(3), .stats-grid > *:nth-child(3), .tiktok-grid > *:nth-child(3) { transition-delay: 0.16s; }
+    .casting-steps > *:nth-child(4), .pillars-grid > *:nth-child(4), .ambassador-grid > *:nth-child(4),
+    .collab-grid > *:nth-child(4), .talents-grid > *:nth-child(4),
+    .cinema-grid > *:nth-child(4), .stats-grid > *:nth-child(4) { transition-delay: 0.24s; }
+
+    /* Entrée du modal */
+    @keyframes modalIn { from { opacity: 0; transform: translateY(26px) scale(0.98); } to { opacity: 1; transform: none; } }
+    @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
+    .page-overlay.active { animation: overlayIn 0.3s ease; }
+    .page-overlay.active .modal { animation: modalIn 0.45s cubic-bezier(0.25, 1, 0.5, 1); }
+
+    /* Soulignement doré des mots en italique dans les titres révélés */
+    .section-title em {
+      background: linear-gradient(var(--gold), var(--gold)) no-repeat left 96% / 0% 1px;
+      transition: background-size 1.1s cubic-bezier(0.25, 1, 0.5, 1) 0.45s;
+      padding-bottom: 2px;
+    }
+    .section-title.visible em { background-size: 100% 1px; }
+
+    /* Ligne de la timeline qui se dessine */
+    .timeline::before { transform: scaleY(0); transform-origin: top; transition: transform 1.8s cubic-bezier(0.25, 1, 0.5, 1) 0.2s; }
+    .timeline.drawn::before { transform: scaleY(1); }
+
+    /* Réponses FAQ en fondu */
+    @keyframes faqIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+    .faq-item[open] p { animation: faqIn 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+
+    /* Cartes films : légère élévation au survol */
+    .film-card { transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+    .film-card:hover { transform: translateY(-4px); }
+
+    /* Pression tactile des boutons */
+    .btn:active, .form-submit:active { transform: translateY(1px) scale(0.985); }
+
+    /* Fondu des bords du ticker */
+    .ticker-wrap {
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+      mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+    }
+
+    /* Preuve sociale RÉELLE dans la bannière casting */
+    .casting-banner-stats {
+      margin-top: 0.8rem !important;
+      font-size: 0.68rem !important;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold) !important;
+      font-weight: 400 !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .page-overlay.active, .page-overlay.active .modal, .faq-item[open] p { animation: none !important; }
+      .timeline::before { transition: none; transform: scaleY(1); }
+      .section-title em { transition: none; background-size: 100% 1px; }
+      .casting-steps > *, .pillars-grid > *, .ambassador-grid > *, .business-grid > *, .collab-grid > *,
+      .talents-grid > *, .cinema-grid > *, .stats-grid > *, .tiktok-grid > * { transition-delay: 0s; }
+    }
   </style>
   <!-- Vercel Analytics -->
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
+
+<a href="#about" class="skip-link" data-i18n="a11y.skip">Aller au contenu</a>
+<div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
 
 <!-- CLAP DE CINÉMA — OVERLAY PLEIN ÉCRAN -->
 <div class="clap-curtain" id="clap-curtain">
@@ -1929,6 +2362,7 @@
   <ul class="nav-links">
     <li><a href="#about" data-i18n="nav.about">À propos</a></li>
     <li><a href="#cinema" data-i18n="nav.cinema">Collywood</a></li>
+    <li><a href="#casting" data-i18n="nav.casting">Casting</a></li>
     <li><a href="#fondation" data-i18n="nav.fondation">Fondation</a></li>
     <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
   </ul>
@@ -1952,6 +2386,7 @@
     <a href="#parcours" onclick="toggleMenu()" data-i18n="parcours.eyebrow">Parcours</a>
     <a href="#stats" onclick="toggleMenu()" data-i18n="stats.eyebrow">Audience</a>
     <a href="#cinema" onclick="toggleMenu()" data-i18n="nav.cinema">Collywood</a>
+    <a href="#casting" onclick="toggleMenu()" data-i18n="nav.casting">Casting</a>
     <a href="#business" onclick="toggleMenu()" data-i18n="business.eyebrow">Business</a>
     <a href="#services" onclick="toggleMenu()" data-i18n="menu.collab">Collab</a>
     <a href="#fondation" onclick="toggleMenu()" data-i18n="nav.fondation">Fondation</a>
@@ -1989,16 +2424,16 @@
       <a href="#fondation" class="btn btn-outline" data-i18n="nav.fondation">Fondation</a>
     </div>
     <div class="hero-social">
-      <a href="https://www.tiktok.com/@kendajoliejolie?_r=1&_t=ZS-97KK52z2YRr" target="_blank" title="TikTok">
+      <a href="https://www.tiktok.com/@kendajoliejolie?_r=1&_t=ZS-97KK52z2YRr" target="_blank" rel="noopener noreferrer" title="TikTok">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg>
       </a>
-      <a href="https://www.instagram.com/jolie_jolie_kenda?igsh=cnVqY3d5d280dWU5" target="_blank" title="Instagram">
+      <a href="https://www.instagram.com/jolie_jolie_kenda?igsh=cnVqY3d5d280dWU5" target="_blank" rel="noopener noreferrer" title="Instagram">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
       </a>
-      <a href="https://youtube.com/@hon.joliekendaofficiel?si=SCerhgtyBaus8p5n" target="_blank" title="YouTube">
+      <a href="https://youtube.com/@hon.joliekendaofficiel?si=SCerhgtyBaus8p5n" target="_blank" rel="noopener noreferrer" title="YouTube">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
       </a>
-      <a href="https://www.facebook.com/share/1EiYhVjzfZ/?mibextid=wwXIfr" target="_blank" title="Facebook">
+      <a href="https://www.facebook.com/share/1EiYhVjzfZ/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" title="Facebook">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
       </a>
     </div>
@@ -2084,28 +2519,28 @@
     <span class="section-eyebrow reveal" style="color:var(--gold);" data-i18n="stats.eyebrow">Audience</span>
     <h2 class="section-title reveal" style="color:var(--white);" data-i18n="stats.title">Un rayonnement de <em>continent</em></h2>
     <div class="stats-grid">
-      <a href="https://www.tiktok.com/@kendajoliejolie?_r=1&_t=ZS-97KK52z2YRr" target="_blank" class="stat-card reveal" title="Voir le profil TikTok">
+      <a href="https://www.tiktok.com/@kendajoliejolie?_r=1&_t=ZS-97KK52z2YRr" target="_blank" rel="noopener noreferrer" class="stat-card reveal" title="Voir le profil TikTok">
         <div class="stat-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg>
         </div>
         <div class="stat-num" id="stat1">0</div>
         <div class="stat-label">TikTok</div>
       </a>
-      <a href="https://www.facebook.com/share/1EiYhVjzfZ/?mibextid=wwXIfr" target="_blank" class="stat-card reveal" title="Voir la page Facebook">
+      <a href="https://www.facebook.com/share/1EiYhVjzfZ/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="stat-card reveal" title="Voir la page Facebook">
         <div class="stat-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
         </div>
         <div class="stat-num" id="stat2">0</div>
         <div class="stat-label">Facebook</div>
       </a>
-      <a href="https://youtube.com/@hon.joliekendaofficiel?si=SCerhgtyBaus8p5n" target="_blank" class="stat-card reveal" title="Voir la chaîne YouTube">
+      <a href="https://youtube.com/@hon.joliekendaofficiel?si=SCerhgtyBaus8p5n" target="_blank" rel="noopener noreferrer" class="stat-card reveal" title="Voir la chaîne YouTube">
         <div class="stat-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
         </div>
         <div class="stat-num" id="stat3">0</div>
         <div class="stat-label">YouTube</div>
       </a>
-      <a href="https://www.instagram.com/jolie_jolie_kenda?igsh=cnVqY3d5d280dWU5" target="_blank" class="stat-card reveal" title="Voir le profil Instagram">
+      <a href="https://www.instagram.com/jolie_jolie_kenda?igsh=cnVqY3d5d280dWU5" target="_blank" rel="noopener noreferrer" class="stat-card reveal" title="Voir le profil Instagram">
         <div class="stat-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
         </div>
@@ -2214,22 +2649,22 @@
     <h3 class="cinema-subtitle reveal" style="margin-top:4rem;" data-i18n="cinema.talentsTitle">Talents</h3>
     <p class="reveal" style="color:var(--gray);max-width:600px;margin-bottom:2rem;line-height:1.8;font-size:0.85rem;font-weight:300;" data-i18n="cinema.talentsIntro">Collywood révèle et accompagne une nouvelle génération d'acteurs, réalisateurs et techniciens congolais.</p>
     <div class="talents-grid">
-      <a href="https://www.tiktok.com/@kendajoliejolie?_r=1&_t=ZS-97PEbUnk4iw" target="_blank" class="talent-card reveal" title="Voir le TikTok de Jolie Kenda">
+      <a href="https://www.tiktok.com/@kendajoliejolie?_r=1&_t=ZS-97PEbUnk4iw" target="_blank" rel="noopener noreferrer" class="talent-card reveal" title="Voir le TikTok de Jolie Kenda">
         <div class="talent-photo"><img src="talent-1.jpg" alt="Jolie Kenda" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"/></div>
         <div class="talent-name">Jolie Jolie Kenda</div>
         <div class="talent-role">PDG & CEO de Collywood</div>
       </a>
-      <a href="https://www.tiktok.com/@privato_officiel?_r=1&_t=ZS-97PEq6IAaYs" target="_blank" class="talent-card reveal" title="Voir le TikTok de Privato">
+      <a href="https://www.tiktok.com/@privato_officiel?_r=1&_t=ZS-97PEq6IAaYs" target="_blank" rel="noopener noreferrer" class="talent-card reveal" title="Voir le TikTok de Privato">
         <div class="talent-photo"><img src="talent-2.jpg" alt="Privato" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"/></div>
         <div class="talent-name">Privato</div>
         <div class="talent-role">Acteur</div>
       </a>
-      <a href="https://www.tiktok.com/@bokoko_josh_docteur?_r=1&_t=ZS-97PFD3WsmRE" target="_blank" class="talent-card reveal" title="Voir le TikTok de Josh Bokoko">
+      <a href="https://www.tiktok.com/@bokoko_josh_docteur?_r=1&_t=ZS-97PFD3WsmRE" target="_blank" rel="noopener noreferrer" class="talent-card reveal" title="Voir le TikTok de Josh Bokoko">
         <div class="talent-photo"><img src="talent-3.jpg" alt="Josh Bokoko" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"/></div>
         <div class="talent-name">Josh Bokoko</div>
         <div class="talent-role">Humoriste</div>
       </a>
-      <a href="https://www.tiktok.com/@xuashanti?_r=1&_t=ZS-97PFN4HfSo1" target="_blank" class="talent-card reveal" title="Voir le TikTok d'Ashanti Xu">
+      <a href="https://www.tiktok.com/@xuashanti?_r=1&_t=ZS-97PFN4HfSo1" target="_blank" rel="noopener noreferrer" class="talent-card reveal" title="Voir le TikTok d'Ashanti Xu">
         <div class="talent-photo"><img src="talent-4.jpg" alt="Ashanti Xu" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"/></div>
         <div class="talent-name">Ashanti Xu</div>
         <div class="talent-role">Community Manager</div>
@@ -2240,7 +2675,7 @@
     <h3 class="cinema-subtitle reveal" style="margin-top:4rem;" data-i18n="cinema.galleryTitle">Vidéos virales</h3>
     <p class="reveal" style="color:var(--gray);max-width:600px;margin-bottom:2rem;line-height:1.8;font-size:0.85rem;font-weight:300;">Aperçu des productions et contenus les plus marquants de Collywood.</p>
     <div class="tiktok-grid">
-      <a href="https://vt.tiktok.com/ZSCJtfrDL/" target="_blank" class="tiktok-card reveal">
+      <a href="https://vt.tiktok.com/ZSCJtfrDL/" target="_blank" rel="noopener noreferrer" class="tiktok-card reveal">
         <div class="tiktok-thumb">
           <img src="tiktok-1.jpg" alt="Vidéo Collywood" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"/>
           <div class="tiktok-play-btn">
@@ -2256,7 +2691,7 @@
           <span>Voir sur TikTok →</span>
         </div>
       </a>
-      <a href="https://vt.tiktok.com/ZSCJtrSSE/" target="_blank" class="tiktok-card reveal">
+      <a href="https://vt.tiktok.com/ZSCJtrSSE/" target="_blank" rel="noopener noreferrer" class="tiktok-card reveal">
         <div class="tiktok-thumb">
           <img src="tiktok-2.jpg" alt="Vidéo Collywood" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"/>
           <div class="tiktok-play-btn">
@@ -2272,7 +2707,7 @@
           <span>Voir sur TikTok →</span>
         </div>
       </a>
-      <a href="https://vt.tiktok.com/ZSCJtLRoy/" target="_blank" class="tiktok-card reveal">
+      <a href="https://vt.tiktok.com/ZSCJtLRoy/" target="_blank" rel="noopener noreferrer" class="tiktok-card reveal">
         <div class="tiktok-thumb">
           <img src="tiktok-3.jpg" alt="Vidéo Collywood" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"/>
           <div class="tiktok-play-btn">
@@ -2288,6 +2723,77 @@
           <span>Voir sur TikTok →</span>
         </div>
       </a>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="section-divider" style="background:var(--dark);"><div class="jk-divider" style="border-color:rgba(255,255,255,0.1);"><span class="jk-monogram">J · K</span></div></div>
+
+<!-- CASTING & RECRUTEMENT -->
+<section id="casting" style="background:var(--cream);">
+  <div style="max-width:1200px;margin:0 auto;">
+    <span class="section-eyebrow reveal" data-i18n="casting.eyebrow">Casting &amp; Recrutement</span>
+    <h2 class="section-title reveal" data-i18n="casting.title">Rejoignez l'aventure <em>Collywood</em></h2>
+    <p class="reveal" style="color:var(--gray);max-width:680px;margin-bottom:3rem;line-height:1.8;font-size:0.9rem;font-weight:300;" data-i18n="casting.intro">Acteurs, réalisateurs, techniciens, créatifs : Collywood recherche en permanence les talents qui écriront le cinéma congolais de demain. Un processus simple, transparent — et ouvert au monde entier.</p>
+
+    <div class="casting-steps">
+      <div class="casting-step reveal">
+        <span class="casting-step-num">01</span>
+        <h3 data-i18n="casting.s1Title">Candidature en ligne</h3>
+        <p data-i18n="casting.s1Text">Remplissez le formulaire, joignez votre CV et réglez les frais de dossier de 25 USD directement en ligne, par Mobile Money ou carte bancaire.</p>
+      </div>
+      <div class="casting-step reveal">
+        <span class="casting-step-num">02</span>
+        <h3 data-i18n="casting.s2Title">Analyse de chaque CV</h3>
+        <p data-i18n="casting.s2Text">Chaque candidature est étudiée individuellement par l'équipe de production. Aucun CV n'est écarté sans avoir été lu et évalué.</p>
+      </div>
+      <div class="casting-step reveal">
+        <span class="casting-step-num">03</span>
+        <h3 data-i18n="casting.s3Title">Sélection &amp; contact</h3>
+        <p data-i18n="casting.s3Text">Les profils retenus sont contactés personnellement par l'équipe Collywood pour un entretien ou une audition.</p>
+      </div>
+      <div class="casting-step reveal">
+        <span class="casting-step-num">04</span>
+        <h3 data-i18n="casting.s4Title">Prise en charge complète</h3>
+        <p data-i18n="casting.s4Text">Sélectionné·e ? Collywood organise et prend en charge votre déplacement et votre séjour pour toute la durée du tournage.</p>
+      </div>
+    </div>
+
+    <div class="casting-banner reveal">
+      <div class="casting-banner-icon">
+        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2c2.7 2.7 4 6.3 4 10s-1.3 7.3-4 10c-2.7-2.7-4-6.3-4-10s1.3-7.3 4-10z"/></svg>
+      </div>
+      <div class="casting-banner-body">
+        <h3 data-i18n="casting.bannerTitle">Postulez d'où que vous soyez dans le monde</h3>
+        <p data-i18n="casting.bannerText">Tous les CV reçus sont analysés par notre équipe. Si votre profil est sélectionné, Collywood prend intégralement en charge votre déplacement et votre séjour pendant toute la durée du tournage — quel que soit votre pays de résidence.</p>
+        <p class="casting-banner-stats" data-i18n="casting.bannerStats">Une communauté réelle : 14,5 M+ sur TikTok · 3 M+ sur Facebook · près de 500 k sur YouTube &amp; Instagram</p>
+      </div>
+      <button class="btn btn-gold" onclick="openModal('modal-postuler')" data-i18n="casting.cta">Postuler maintenant</button>
+    </div>
+
+    <h3 class="cinema-subtitle reveal" data-i18n="casting.faqTitle">Questions fréquentes</h3>
+    <div class="casting-faq">
+      <details class="faq-item reveal">
+        <summary data-i18n="casting.q1">Puis-je postuler depuis l'étranger ?</summary>
+        <p data-i18n="casting.a1">Oui. Le casting Collywood est ouvert au monde entier : diaspora congolaise, talents africains ou internationaux. Le paiement par carte bancaire est accepté partout, et si votre profil est retenu, votre voyage et votre séjour pour le tournage sont entièrement pris en charge par Collywood.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary data-i18n="casting.q2">Comment régler les frais de dossier ?</summary>
+        <p data-i18n="casting.a2">Directement dans le formulaire de candidature, via la plateforme sécurisée FlexPay : Mobile Money (M-Pesa, Orange Money, Airtel Money, Afrimoney) ou carte bancaire Visa / Mastercard. Aucune preuve de paiement à joindre — la confirmation est automatique.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary data-i18n="casting.q3">À quoi servent les frais de dossier de 25 USD ?</summary>
+        <p data-i18n="casting.a3">Ils contribuent à la rémunération de l'équipe en charge de l'analyse des candidatures ainsi qu'à des actions caritatives menées auprès d'orphelinats soutenus par la Fondation Jolie Kenda. Ils sont non remboursables et ne constituent pas une garantie d'obtention d'un poste.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary data-i18n="casting.q4">Quand aurai-je une réponse ?</summary>
+        <p data-i18n="casting.a4">Les candidatures sont examinées en continu. Chaque CV est analysé, et les profils correspondant aux besoins des productions en cours sont contactés personnellement par l'équipe.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary data-i18n="casting.q5">Je n'arrive pas à envoyer mon CV, que faire ?</summary>
+        <p data-i18n="casting.a5">Écrivez à <a href='mailto:support@collywood-plus.com'>support@collywood-plus.com</a> ou sur WhatsApp au <a href='https://wa.me/243970130232' target='_blank' rel='noopener noreferrer'>+243 970 130 232</a>, en précisant votre référence de paiement si vous avez déjà réglé les frais. Important : ce numéro WhatsApp répond uniquement aux candidats n'ayant pas réussi à envoyer leur CV.</p>
+      </details>
     </div>
   </div>
 </section>
@@ -2504,23 +3010,23 @@
     <div class="reveal-right">
       <span class="section-eyebrow" data-i18n="nav.contact">Contact</span>
       <h2 class="section-title" data-i18n="contact.title">Travaillons<br/><em>ensemble</em></h2>
-      <p class="contact-email">collywood.collab@gmail.com</p>
+      <p class="contact-email">collywood.collab@gmail.com<button type="button" class="copy-email-btn" id="copy-email-btn" onclick="copyEmail()" title="Copier l'adresse">Copier</button></p>
       <p style="color:var(--gray);font-size:0.85rem;line-height:1.8;font-weight:300;" data-i18n="contact.intro">Pour toute collaboration, partenariat ou demande presse. Deux façons de nous rejoindre :</p>
       <div class="contact-actions">
         <button class="btn btn-gold" onclick="openModal('modal-postuler')" data-i18n="contact.cta1">→ Postuler — Envoyer son CV</button>
         <button class="btn btn-outline" onclick="openModal('modal-propositions')" data-i18n="contact.cta2">Proposer une idée ou un projet</button>
         </div>
       <div class="social-links">
-        <a href="https://www.tiktok.com/@kendajoliejolie?_r=1&_t=ZS-97KK52z2YRr" target="_blank" title="TikTok">
+        <a href="https://www.tiktok.com/@kendajoliejolie?_r=1&_t=ZS-97KK52z2YRr" target="_blank" rel="noopener noreferrer" title="TikTok">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg>
         </a>
-        <a href="https://www.instagram.com/jolie_jolie_kenda?igsh=cnVqY3d5d280dWU5" target="_blank" title="Instagram">
+        <a href="https://www.instagram.com/jolie_jolie_kenda?igsh=cnVqY3d5d280dWU5" target="_blank" rel="noopener noreferrer" title="Instagram">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
         </a>
-        <a href="https://youtube.com/@hon.joliekendaofficiel?si=SCerhgtyBaus8p5n" target="_blank" title="YouTube">
+        <a href="https://youtube.com/@hon.joliekendaofficiel?si=SCerhgtyBaus8p5n" target="_blank" rel="noopener noreferrer" title="YouTube">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
         </a>
-        <a href="https://www.facebook.com/share/1EiYhVjzfZ/?mibextid=wwXIfr" target="_blank" title="Facebook">
+        <a href="https://www.facebook.com/share/1EiYhVjzfZ/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" title="Facebook">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
         </a>
       </div>
@@ -2536,14 +3042,29 @@
   <p>© 2026 Jolie Kenda · Collywood — Tous droits réservés. Conçu par <a href="mailto:Kivadigital3@gmail.com">KIVA</a></p>
 </footer>
 
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Retour en haut">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
 <!-- MODAL POSTULER -->
-<div class="page-overlay" id="modal-postuler">
+<div class="page-overlay" id="modal-postuler" role="dialog" aria-modal="true" aria-labelledby="modal-postuler-title">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('modal-postuler')">✕</button>
-    <span class="modal-eyebrow">Recrutement · Collywood</span>
-    <h2 class="modal-title">Postuler</h2>
-    <p class="modal-desc">Vous souhaitez rejoindre l'équipe Collywood ? Remplissez ce formulaire, joignez votre CV et la preuve de paiement des frais de dossier.</p>
+    <button class="modal-close" onclick="closeModal('modal-postuler')" aria-label="Fermer">✕</button>
+    <span class="modal-eyebrow" data-i18n="apply.eyebrow">Recrutement · Collywood</span>
+    <h2 class="modal-title" id="modal-postuler-title" data-i18n="apply.title">Postuler</h2>
+    <p class="modal-desc" data-i18n="apply.desc">Vous souhaitez rejoindre l'équipe Collywood ? Remplissez ce formulaire, joignez votre CV et réglez vos frais de dossier en ligne — votre candidature part immédiatement.</p>
+
+    <div class="casting-guarantee">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2c2.7 2.7 4 6.3 4 10s-1.3 7.3-4 10c-2.7-2.7-4-6.3-4-10s1.3-7.3 4-10z"/></svg>
+      <div>
+        <div class="casting-guarantee-title" data-i18n="apply.guaranteeTitle">Casting ouvert au monde entier</div>
+        <p data-i18n="apply.guaranteeText">Tous les CV sont analysés par notre équipe. Si vous êtes sélectionné·e, Collywood prend intégralement en charge votre déplacement et votre séjour pour le tournage — où que vous soyez dans le monde.</p>
+      </div>
+    </div>
+
     <form id="form-postuler" action="https://formspree.io/f/mkoalybo" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="_subject" value="Nouvelle candidature — Casting Collywood"/>
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off"/>
       <div class="form-group"><label>Nom complet *</label><input type="text" name="nom" placeholder="Votre nom et prénom" required/></div>
       <div class="form-group"><label>Email *</label><input type="email" name="email" placeholder="votre@email.com" required/></div>
       <div class="form-group"><label>Téléphone</label><input type="tel" name="telephone" placeholder="+243 XXX XXX XXX"/></div>
@@ -2561,14 +3082,14 @@
       </div>
       <div class="form-group"><label>Lettre de motivation</label><textarea name="motivation" placeholder="Pourquoi souhaitez-vous rejoindre Collywood ?"></textarea></div>
 
-      <!-- PAIEMENT 25$ -->
+      <!-- PAIEMENT 25$ — FLEXPAY INTÉGRÉ -->
       <div class="payment-notice">
         <div class="payment-notice-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
         </div>
         <div>
-          <div class="payment-notice-title">Frais de dossier — 25 USD</div>
-          <p class="payment-notice-text">Toute candidature nécessite le paiement préalable de <strong>25 USD</strong> de frais de dossier. Effectuez votre paiement, puis joignez la preuve ci-dessous avec votre CV.</p>
+          <div class="payment-notice-title" data-i18n="apply.feeTitle">Frais de dossier — 25 USD</div>
+          <p class="payment-notice-text" data-i18n="apply.feeText">Le règlement de <strong>25 USD</strong> s'effectue directement ici, en toute sécurité via <strong>FlexPay</strong>. Aucune preuve de paiement à joindre : la confirmation est automatique et votre candidature part aussitôt.</p>
         </div>
       </div>
 
@@ -2588,37 +3109,75 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label>Preuve de paiement (25 USD) *</label>
-        <div class="file-upload-area payment-upload">
-          <input type="file" name="preuve_paiement" accept=".pdf,.jpg,.jpeg,.png" id="payment-input" required onchange="updateFileName(this, 'file-name-payment')"/>
-          <div class="file-upload-icon" style="color:var(--gold);">
+      <!-- MODE DE PAIEMENT -->
+      <div class="form-group" style="margin-bottom:0.8rem;">
+        <label data-i18n="apply.payMethodLabel">Mode de paiement *</label>
+        <div class="pay-methods">
+          <label class="pay-method active" id="pm-mobile">
+            <input type="radio" name="pay_method_choice" value="mobile" checked onchange="selectPayMethod('mobile')"/>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+            <span class="pay-method-name">Mobile Money</span>
+            <small>M-Pesa · Orange · Airtel · Afrimoney</small>
+          </label>
+          <label class="pay-method" id="pm-carte">
+            <input type="radio" name="pay_method_choice" value="carte" onchange="selectPayMethod('carte')"/>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-          </div>
-          <div class="file-upload-text">Joindre la preuve de paiement<br/><small>JPG, PNG, PDF — max 5 Mo</small></div>
-          <div class="file-name" id="file-name-payment"></div>
+            <span class="pay-method-name" data-i18n="apply.cardName">Carte bancaire</span>
+            <small data-i18n="apply.cardHint">Visa · Mastercard — international</small>
+          </label>
         </div>
       </div>
+      <div class="form-group" id="pay-phone-group">
+        <label data-i18n="apply.payPhoneLabel">Numéro Mobile Money (RDC) *</label>
+        <input type="tel" id="pay-phone" inputmode="tel" placeholder="+243 XXX XXX XXX"/>
+      </div>
 
-      <button type="submit" class="form-submit">Envoyer ma candidature →</button>
-      <p class="form-note">Transmission sécurisée vers collywood.collab@gmail.com</p>
+      <div id="pay-status" class="pay-status" hidden></div>
+
+      <button type="submit" class="form-submit" id="submit-postuler" data-i18n="apply.submit">Payer 25 USD &amp; envoyer ma candidature →</button>
+      <p class="form-note" data-i18n="apply.note">Paiement sécurisé FlexPay · Candidature transmise à l'équipe recrutement Collywood</p>
+
+      <!-- SUPPORT CV — WHATSAPP -->
+      <div class="support-box">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <div>
+          <strong data-i18n="apply.supportTitle">Un souci pour envoyer votre CV ?</strong>
+          <p data-i18n="apply.supportText">Contactez <a href='mailto:support@collywood-plus.com'>support@collywood-plus.com</a> ou le WhatsApp ci-dessous. Ce numéro répond uniquement aux candidats n'ayant pas réussi à envoyer leur CV.</p>
+          <a class="btn-wa" href="https://wa.me/243970130232?text=Bonjour%2C%20je%20n%27ai%20pas%20r%C3%A9ussi%20%C3%A0%20envoyer%20mon%20CV%20via%20le%20site%20Jolie%20Kenda." target="_blank" rel="noopener noreferrer">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp · +243 970 130 232
+          </a>
+        </div>
+      </div>
     </form>
     <div class="form-success" id="success-postuler">
       <div class="form-success-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#B8963E" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg></div>
-      <h3>Candidature envoyée !</h3>
-      <p>L'équipe Collywood vous contactera dans les meilleurs délais.</p>
+      <h3 data-i18n="apply.successTitle">Candidature envoyée !</h3>
+      <p data-i18n="apply.successText">Paiement confirmé. Votre CV sera analysé par l'équipe Collywood — les profils retenus sont contactés personnellement.</p>
+      <p id="success-ref" style="font-size:0.72rem;color:var(--gold);margin-top:0.8rem;letter-spacing:0.05em;"></p>
+      <div class="support-box" id="success-cv-warning" hidden>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <div>
+          <strong data-i18n="apply.cvWarnTitle">Votre CV n'a pas été transmis</strong>
+          <p data-i18n="apply.cvWarnText">Votre paiement est bien confirmé et votre candidature est enregistrée, mais le CV n'a pas pu être envoyé automatiquement. Transmettez-le avec votre référence de paiement :</p>
+          <p style="margin-top:0.45rem;"><a href="mailto:support@collywood-plus.com">support@collywood-plus.com</a></p>
+          <a class="btn-wa" id="success-wa-link" href="https://wa.me/243970130232" target="_blank" rel="noopener noreferrer">WhatsApp · +243 970 130 232</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- MODAL PROPOSITIONS -->
-<div class="page-overlay" id="modal-propositions">
+<div class="page-overlay" id="modal-propositions" role="dialog" aria-modal="true" aria-labelledby="modal-propositions-title">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('modal-propositions')">✕</button>
+    <button class="modal-close" onclick="closeModal('modal-propositions')" aria-label="Fermer">✕</button>
     <span class="modal-eyebrow">Idées &amp; Projets · Collywood</span>
-    <h2 class="modal-title">Proposer une idée</h2>
+    <h2 class="modal-title" id="modal-propositions-title">Proposer une idée</h2>
     <p class="modal-desc">Vous avez un projet ou une idée de collaboration ? Toutes les propositions sont lues avec attention.</p>
     <form id="form-propositions" action="https://formspree.io/f/xdavrbdp" method="POST">
+      <input type="hidden" name="_subject" value="Nouvelle proposition — Site Jolie Kenda"/>
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off"/>
       <div class="form-group"><label>Nom complet *</label><input type="text" name="nom" placeholder="Votre nom et prénom" required/></div>
       <div class="form-group"><label>Téléphone *</label><input type="tel" name="telephone" placeholder="+243 XXX XXX XXX" required/></div>
       <div class="form-group"><label>Email *</label><input type="email" name="email" placeholder="votre@email.com" required/></div>
@@ -2762,6 +3321,53 @@
       'contact.intro': 'Pour toute collaboration, partenariat ou demande presse. Deux façons de nous rejoindre :',
       'contact.cta1': '→ Postuler — Envoyer son CV',
       'contact.cta2': 'Proposer une idée ou un projet',
+      'nav.casting': 'Casting',
+      'a11y.skip': 'Aller au contenu',
+      'casting.eyebrow': 'Casting &amp; Recrutement',
+      'casting.title': "Rejoignez l'aventure <em>Collywood</em>",
+      'casting.intro': "Acteurs, réalisateurs, techniciens, créatifs : Collywood recherche en permanence les talents qui écriront le cinéma congolais de demain. Un processus simple, transparent — et ouvert au monde entier.",
+      'casting.s1Title': 'Candidature en ligne',
+      'casting.s1Text': "Remplissez le formulaire, joignez votre CV et réglez les frais de dossier de 25 USD directement en ligne, par Mobile Money ou carte bancaire.",
+      'casting.s2Title': 'Analyse de chaque CV',
+      'casting.s2Text': "Chaque candidature est étudiée individuellement par l'équipe de production. Aucun CV n'est écarté sans avoir été lu et évalué.",
+      'casting.s3Title': 'Sélection &amp; contact',
+      'casting.s3Text': "Les profils retenus sont contactés personnellement par l'équipe Collywood pour un entretien ou une audition.",
+      'casting.s4Title': 'Prise en charge complète',
+      'casting.s4Text': "Sélectionné·e ? Collywood organise et prend en charge votre déplacement et votre séjour pour toute la durée du tournage.",
+      'casting.bannerTitle': "Postulez d'où que vous soyez dans le monde",
+      'casting.bannerText': "Tous les CV reçus sont analysés par notre équipe. Si votre profil est sélectionné, Collywood prend intégralement en charge votre déplacement et votre séjour pendant toute la durée du tournage — quel que soit votre pays de résidence.",
+      'casting.cta': 'Postuler maintenant',
+      'casting.faqTitle': 'Questions fréquentes',
+      'casting.q1': "Puis-je postuler depuis l'étranger ?",
+      'casting.a1': "Oui. Le casting Collywood est ouvert au monde entier : diaspora congolaise, talents africains ou internationaux. Le paiement par carte bancaire est accepté partout, et si votre profil est retenu, votre voyage et votre séjour pour le tournage sont entièrement pris en charge par Collywood.",
+      'casting.q2': 'Comment régler les frais de dossier ?',
+      'casting.a2': "Directement dans le formulaire de candidature, via la plateforme sécurisée FlexPay : Mobile Money (M-Pesa, Orange Money, Airtel Money, Afrimoney) ou carte bancaire Visa / Mastercard. Aucune preuve de paiement à joindre — la confirmation est automatique.",
+      'casting.q3': 'À quoi servent les frais de dossier de 25 USD ?',
+      'casting.a3': "Ils contribuent à la rémunération de l'équipe en charge de l'analyse des candidatures ainsi qu'à des actions caritatives menées auprès d'orphelinats soutenus par la Fondation Jolie Kenda. Ils sont non remboursables et ne constituent pas une garantie d'obtention d'un poste.",
+      'casting.q4': 'Quand aurai-je une réponse ?',
+      'casting.a4': "Les candidatures sont examinées en continu. Chaque CV est analysé, et les profils correspondant aux besoins des productions en cours sont contactés personnellement par l'équipe.",
+      'apply.eyebrow': 'Recrutement · Collywood',
+      'apply.title': 'Postuler',
+      'apply.desc': "Vous souhaitez rejoindre l'équipe Collywood ? Remplissez ce formulaire, joignez votre CV et réglez vos frais de dossier en ligne — votre candidature part immédiatement.",
+      'apply.guaranteeTitle': 'Casting ouvert au monde entier',
+      'apply.guaranteeText': "Tous les CV sont analysés par notre équipe. Si vous êtes sélectionné·e, Collywood prend intégralement en charge votre déplacement et votre séjour pour le tournage — où que vous soyez dans le monde.",
+      'apply.feeTitle': 'Frais de dossier — 25 USD',
+      'apply.feeText': "Le règlement de <strong>25 USD</strong> s'effectue directement ici, en toute sécurité via <strong>FlexPay</strong>. Aucune preuve de paiement à joindre : la confirmation est automatique et votre candidature part aussitôt.",
+      'apply.payMethodLabel': 'Mode de paiement *',
+      'apply.cardName': 'Carte bancaire',
+      'apply.cardHint': 'Visa · Mastercard — international',
+      'apply.payPhoneLabel': 'Numéro Mobile Money (RDC) *',
+      'apply.submit': 'Payer 25 USD &amp; envoyer ma candidature →',
+      'apply.note': "Paiement sécurisé FlexPay · Candidature transmise à l'équipe recrutement Collywood",
+      'apply.successTitle': 'Candidature envoyée !',
+      'apply.successText': "Paiement confirmé. Votre CV sera analysé par l'équipe Collywood — les profils retenus sont contactés personnellement.",
+      'apply.supportTitle': 'Un souci pour envoyer votre CV ?',
+      'apply.supportText': "Contactez <a href='mailto:support@collywood-plus.com'>support@collywood-plus.com</a> ou le WhatsApp ci-dessous. Ce numéro répond uniquement aux candidats n'ayant pas réussi à envoyer leur CV.",
+      'apply.cvWarnTitle': "Votre CV n'a pas été transmis",
+      'apply.cvWarnText': "Votre paiement est bien confirmé et votre candidature est enregistrée, mais le CV n'a pas pu être envoyé automatiquement. Transmettez-le avec votre référence de paiement :",
+      'casting.q5': "Je n'arrive pas à envoyer mon CV, que faire ?",
+      'casting.a5': "Écrivez à <a href='mailto:support@collywood-plus.com'>support@collywood-plus.com</a> ou sur WhatsApp au <a href='https://wa.me/243970130232' target='_blank' rel='noopener noreferrer'>+243 970 130 232</a>, en précisant votre référence de paiement si vous avez déjà réglé les frais. Important : ce numéro WhatsApp répond uniquement aux candidats n'ayant pas réussi à envoyer leur CV.",
+      'casting.bannerStats': "Une communauté réelle : 14,5 M+ sur TikTok · 3 M+ sur Facebook · près de 500 k sur YouTube &amp; Instagram",
     },
     en: {
       'nav.about': 'About',
@@ -2873,6 +3479,53 @@
       'contact.intro': 'For any collaboration, partnership or press inquiry. Two ways to reach us:',
       'contact.cta1': '→ Apply — Send your CV',
       'contact.cta2': 'Propose an idea or project',
+      'nav.casting': 'Casting',
+      'a11y.skip': 'Skip to content',
+      'casting.eyebrow': 'Casting &amp; Recruitment',
+      'casting.title': 'Join the <em>Collywood</em> adventure',
+      'casting.intro': "Actors, directors, technicians, creatives: Collywood is constantly looking for the talents who will write the future of Congolese cinema. A simple, transparent process — open to the whole world.",
+      'casting.s1Title': 'Online application',
+      'casting.s1Text': "Fill in the form, attach your CV and pay the 25 USD application fee directly online, by Mobile Money or bank card.",
+      'casting.s2Title': 'Every CV is reviewed',
+      'casting.s2Text': "Every application is examined individually by the production team. No CV is set aside without being read and assessed.",
+      'casting.s3Title': 'Selection &amp; contact',
+      'casting.s3Text': "Successful profiles are contacted personally by the Collywood team for an interview or an audition.",
+      'casting.s4Title': 'Full coverage',
+      'casting.s4Text': "Selected? Collywood organizes and covers your travel and accommodation for the entire duration of the shoot.",
+      'casting.bannerTitle': 'Apply from anywhere in the world',
+      'casting.bannerText': "Every CV we receive is reviewed by our team. If your profile is selected, Collywood fully covers your travel and your stay for the entire duration of the shoot — whatever your country of residence.",
+      'casting.cta': 'Apply now',
+      'casting.faqTitle': 'Frequently asked questions',
+      'casting.q1': 'Can I apply from abroad?',
+      'casting.a1': "Yes. The Collywood casting is open worldwide: Congolese diaspora, African or international talents. Bank card payment is accepted everywhere, and if your profile is selected, your travel and stay for the shoot are fully covered by Collywood.",
+      'casting.q2': 'How do I pay the application fee?',
+      'casting.a2': "Directly within the application form, through the secure FlexPay platform: Mobile Money (M-Pesa, Orange Money, Airtel Money, Afrimoney) or Visa / Mastercard bank card. No proof of payment to attach — confirmation is automatic.",
+      'casting.q3': 'What is the 25 USD application fee for?',
+      'casting.a3': "It contributes to the remuneration of the team in charge of reviewing applications, as well as to charitable actions carried out with orphanages supported by the Jolie Kenda Foundation. It is non-refundable and does not guarantee a position.",
+      'casting.q4': 'When will I get an answer?',
+      'casting.a4': "Applications are reviewed on an ongoing basis. Every CV is analyzed, and profiles matching the needs of current productions are contacted personally by the team.",
+      'apply.eyebrow': 'Recruitment · Collywood',
+      'apply.title': 'Apply',
+      'apply.desc': "Want to join the Collywood team? Fill in this form, attach your CV and pay your application fee online — your application is sent immediately.",
+      'apply.guaranteeTitle': 'Casting open worldwide',
+      'apply.guaranteeText': "Every CV is reviewed by our team. If you are selected, Collywood fully covers your travel and your stay for the shoot — wherever you are in the world.",
+      'apply.feeTitle': 'Application fee — 25 USD',
+      'apply.feeText': "The <strong>25 USD</strong> payment is made right here, securely via <strong>FlexPay</strong>. No proof of payment to attach: confirmation is automatic and your application is sent immediately.",
+      'apply.payMethodLabel': 'Payment method *',
+      'apply.cardName': 'Bank card',
+      'apply.cardHint': 'Visa · Mastercard — international',
+      'apply.payPhoneLabel': 'Mobile Money number (DRC) *',
+      'apply.submit': 'Pay 25 USD &amp; send my application →',
+      'apply.note': 'Secure FlexPay payment · Application sent to the Collywood recruitment team',
+      'apply.successTitle': 'Application sent!',
+      'apply.successText': "Payment confirmed. Your CV will be reviewed by the Collywood team — successful profiles are contacted personally.",
+      'apply.supportTitle': 'Trouble sending your CV?',
+      'apply.supportText': "Contact <a href='mailto:support@collywood-plus.com'>support@collywood-plus.com</a> or the WhatsApp below. This number only answers candidates who could not send their CV.",
+      'apply.cvWarnTitle': 'Your CV was not transmitted',
+      'apply.cvWarnText': "Your payment is confirmed and your application has been recorded, but your CV could not be sent automatically. Send it with your payment reference:",
+      'casting.q5': "I can't manage to send my CV — what should I do?",
+      'casting.a5': "Write to <a href='mailto:support@collywood-plus.com'>support@collywood-plus.com</a> or on WhatsApp at <a href='https://wa.me/243970130232' target='_blank' rel='noopener noreferrer'>+243 970 130 232</a>, mentioning your payment reference if you have already paid the fee. Important: this WhatsApp number only answers candidates who could not send their CV.",
+      'casting.bannerStats': "A real community: 14.5M+ on TikTok · 3M+ on Facebook · nearly 500k on YouTube &amp; Instagram",
     }
   };
 
@@ -2918,15 +3571,24 @@
       'title="Lecteur vidéo" ' +
       'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
       'allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>' +
-      '<noscript><a href="https://youtu.be/' + videoId + '" target="_blank">Regarder sur YouTube</a></noscript>';
+      '<noscript><a href="https://youtu.be/' + videoId + '" target="_blank" rel="noopener noreferrer">Regarder sur YouTube</a></noscript>';
     card.onclick = null;
     card.style.cursor = 'default';
   }
 
-  // FILE NAME
+  // FILE NAME + VALIDATION DE TAILLE (5 Mo)
   function updateFileName(input, targetId) {
     const d = document.getElementById(targetId || 'file-name-cv');
-    if(input.files && input.files[0]) d.textContent = '✓ ' + input.files[0].name;
+    if(input.files && input.files[0]) {
+      if (input.files[0].size > 5 * 1024 * 1024) {
+        d.textContent = (document.documentElement.getAttribute('lang') === 'en')
+          ? '✕ File too large (max 5 MB)'
+          : '✕ Fichier trop lourd (max 5 Mo)';
+        input.value = '';
+        return;
+      }
+      d.textContent = '✓ ' + input.files[0].name;
+    }
   }
 
   // FORM AJAX
@@ -2942,7 +3604,7 @@
       } catch { btn.textContent = 'Erreur — Réessayez'; btn.disabled = false; }
     });
   }
-  handleForm('form-postuler','success-postuler');
+  // Le formulaire « Postuler » est géré par le flux de paiement FlexPay (plus bas)
   handleForm('form-propositions','success-propositions');
 
   // COMPTEURS
@@ -3036,6 +3698,253 @@
     }, { threshold: 0.1 });
     mediaObserver.observe(mediaGallery);
   }
+
+  // ──────────────────────────────────────────────────────────────
+  // PAIEMENT FLEXPAY — CANDIDATURE (frais de dossier 25 USD)
+  // Le jeton marchand vit côté serveur (fonction Supabase dédiée) ;
+  // le site n'échange que des références de transaction.
+  // ──────────────────────────────────────────────────────────────
+  const CASTING_PAY = 'https://qckjbvivsyqbsujjbbcf.supabase.co/functions/v1/jolie-kenda-casting';
+  let payMethod = 'mobile';
+  let paidRef = null; // orderNumber conservé si le paiement réussit mais que l'envoi échoue
+
+  const isEN = () => document.documentElement.getAttribute('lang') === 'en';
+
+  function selectPayMethod(m) {
+    payMethod = m;
+    document.getElementById('pm-mobile').classList.toggle('active', m === 'mobile');
+    document.getElementById('pm-carte').classList.toggle('active', m === 'carte');
+    document.getElementById('pay-phone-group').style.display = (m === 'mobile') ? '' : 'none';
+  }
+
+  function payStatus(html, isError) {
+    const el = document.getElementById('pay-status');
+    el.hidden = false;
+    el.classList.toggle('error', !!isError);
+    el.innerHTML = (isError ? '' : '<span class="pay-spinner"></span>') + '<div>' + html + '</div>';
+  }
+  function hidePayStatus() { document.getElementById('pay-status').hidden = true; }
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  async function checkPaid(orderNumber) {
+    const r = await fetch(CASTING_PAY + '/status', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderNumber })
+    });
+    return r.json();
+  }
+
+  // Lien WhatsApp support CV, pré-rempli avec la référence de paiement
+  function waLink(ref) {
+    const msg = isEN()
+      ? 'Hello, I could not send my CV with my application. My payment reference: ' + ref
+      : "Bonjour, je n'ai pas réussi à envoyer mon CV avec ma candidature. Ma référence de paiement : " + ref;
+    return 'https://wa.me/243970130232?text=' + encodeURIComponent(msg);
+  }
+
+  // Écran de succès — cvMissing=true : paiement acquis mais CV non transmis,
+  // on affiche les coordonnées du support (e-mail + WhatsApp) avec la référence
+  function showApplySuccess(cvMissing) {
+    document.getElementById('form-postuler').style.display = 'none';
+    hidePayStatus();
+    document.getElementById('success-ref').textContent = (isEN() ? 'Payment reference: ' : 'Référence de paiement : ') + paidRef.orderNumber;
+    if (cvMissing) {
+      document.getElementById('success-wa-link').href = waLink(paidRef.orderNumber);
+      document.getElementById('success-cv-warning').hidden = false;
+    }
+    document.getElementById('success-postuler').classList.add('visible');
+  }
+
+  document.getElementById('form-postuler').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const form = this;
+    const btn = document.getElementById('submit-postuler');
+    if (form.querySelector('[name="_gotcha"]').value) return; // robot
+
+    const cv = document.getElementById('cv-input');
+    if (cv.files[0] && cv.files[0].size > 5 * 1024 * 1024) {
+      payStatus(isEN() ? 'Your CV exceeds 5 MB — please attach a lighter file.' : 'Votre CV dépasse 5 Mo — merci de joindre un fichier plus léger.', true);
+      return;
+    }
+
+    btn.disabled = true;
+    const btnLabel = btn.innerHTML;
+
+    try {
+      if (!paidRef) {
+        let phone = '';
+        if (payMethod === 'mobile') {
+          phone = (document.getElementById('pay-phone').value || form.querySelector('[name="telephone"]').value || '').trim();
+          if (phone.replace(/[^0-9]/g, '').length < 9) {
+            payStatus(isEN() ? 'Please enter a valid Mobile Money number (DRC).' : 'Veuillez saisir un numéro Mobile Money (RDC) valide.', true);
+            btn.disabled = false;
+            return;
+          }
+        }
+        // Carte : ouvrir la fenêtre immédiatement (sinon bloquée par les navigateurs)
+        let payWin = null;
+        if (payMethod === 'carte') { try { payWin = window.open('', '_blank'); } catch (_) {} }
+
+        payStatus(isEN() ? 'Initializing secure payment…' : 'Initialisation du paiement sécurisé…');
+        btn.textContent = isEN() ? 'Payment in progress…' : 'Paiement en cours…';
+
+        const init = await fetch(CASTING_PAY + '/init', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ method: payMethod === 'carte' ? 'carte' : 'mobile', phone })
+        }).then(r => r.json()).catch(() => null);
+
+        if (!init || !init.ok || !init.orderNumber) {
+          if (payWin) payWin.close();
+          payStatus((init && init.error) || (isEN() ? 'Payment could not be initialized. Please try again.' : "Le paiement n'a pas pu être initialisé. Réessayez."), true);
+          btn.disabled = false; btn.innerHTML = btnLabel;
+          return;
+        }
+
+        if (payMethod === 'carte') {
+          if (payWin && init.url) payWin.location = init.url;
+          payStatus((isEN()
+            ? 'Complete your payment on the secure FlexPay page. '
+            : 'Finalisez votre paiement sur la page sécurisée FlexPay. ')
+            + (init.url ? '<a href="' + init.url + '" target="_blank" rel="noopener noreferrer">' + (isEN() ? 'Open the payment page' : 'Ouvrir la page de paiement') + '</a>' : ''));
+        } else {
+          payStatus(isEN()
+            ? 'A confirmation request has been sent to your phone. Approve the payment to continue…'
+            : "Une demande de confirmation vient d'être envoyée sur votre téléphone. Validez le paiement pour continuer…");
+        }
+
+        // Attente de la confirmation (mobile ≈ 3 min, carte ≈ 6 min)
+        const maxTries = payMethod === 'carte' ? 72 : 36;
+        let st = null;
+        for (let i = 0; i < maxTries; i++) {
+          await sleep(5000);
+          st = await checkPaid(init.orderNumber).catch(() => null);
+          if (st && (st.paid || st.failed)) break;
+        }
+        if (!st || !st.paid) {
+          payStatus((st && st.failed)
+            ? (isEN() ? 'Payment declined or cancelled. No amount was charged — you can try again.' : 'Paiement refusé ou annulé. Aucun montant prélevé — vous pouvez réessayer.')
+            : (isEN() ? 'Payment not confirmed yet. If you approved it, wait a moment then press the button again.' : "Paiement non confirmé pour l'instant. Si vous avez validé, patientez un peu puis cliquez à nouveau sur le bouton."), true);
+          btn.disabled = false; btn.innerHTML = btnLabel;
+          return;
+        }
+        paidRef = { orderNumber: init.orderNumber };
+      }
+
+      // Paiement confirmé → envoi de la candidature
+      payStatus(isEN() ? 'Payment confirmed — sending your application…' : 'Paiement confirmé — envoi de votre candidature…');
+      const fd = new FormData(form);
+      fd.delete('_gotcha');
+      fd.delete('pay_method_choice');
+      fd.append('montant_frais', '25 USD');
+      fd.append('methode_paiement', payMethod === 'carte' ? 'Carte bancaire (FlexPay)' : 'Mobile Money (FlexPay)');
+      fd.append('reference_paiement', paidRef.orderNumber);
+      const res = await fetch(form.action, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } }).catch(() => null);
+      if (res && res.ok) {
+        showApplySuccess(false);
+      } else {
+        // Le paiement est acquis : on renvoie la candidature SANS le CV pour que
+        // les informations et la référence parviennent quand même à l'équipe,
+        // puis on oriente le candidat vers le support (e-mail + WhatsApp).
+        const fd2 = new FormData(form);
+        fd2.delete('_gotcha');
+        fd2.delete('pay_method_choice');
+        fd2.delete('cv');
+        fd2.append('montant_frais', '25 USD');
+        fd2.append('methode_paiement', payMethod === 'carte' ? 'Carte bancaire (FlexPay)' : 'Mobile Money (FlexPay)');
+        fd2.append('reference_paiement', paidRef.orderNumber);
+        fd2.append('cv_manquant', "OUI — échec technique de l'envoi du CV ; le candidat est invité à l'envoyer à support@collywood-plus.com ou au WhatsApp +243 970 130 232");
+        await fetch(form.action, { method: 'POST', body: fd2, headers: { 'Accept': 'application/json' } }).catch(() => null);
+        showApplySuccess(true);
+      }
+    } catch (err) {
+      payStatus(isEN() ? 'Connection error. Check your network and try again.' : 'Erreur de connexion. Vérifiez votre réseau puis réessayez.', true);
+      btn.disabled = false; btn.innerHTML = btnLabel;
+    }
+  });
+
+  // ── SCROLL : barre de progression, nav, retour en haut, parallaxe hero ──
+  const progressBar = document.getElementById('scroll-progress-bar');
+  const backToTop = document.getElementById('back-to-top');
+  const navEl = document.querySelector('nav');
+  const heroText = document.querySelector('.hero-text');
+  const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let scrollTick = false;
+  window.addEventListener('scroll', () => {
+    if (scrollTick) return;
+    scrollTick = true;
+    requestAnimationFrame(() => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+      navEl.classList.toggle('scrolled', window.scrollY > 40);
+      backToTop.classList.toggle('show', window.scrollY > 700);
+      // Parallaxe douce du texte du hero (desktop uniquement)
+      if (motionOK && heroText && window.innerWidth > 768) {
+        heroText.style.transform = window.scrollY < window.innerHeight
+          ? 'translateY(' + (window.scrollY * -0.06).toFixed(1) + 'px)'
+          : '';
+      }
+      scrollTick = false;
+    });
+  }, { passive: true });
+
+  // ── LIGNE DE TIMELINE QUI SE DESSINE ──
+  const timelineEl = document.querySelector('.timeline');
+  if (timelineEl) {
+    const tObs = new IntersectionObserver(en => {
+      if (en[0].isIntersecting) { timelineEl.classList.add('drawn'); tObs.disconnect(); }
+    }, { threshold: 0.1 });
+    tObs.observe(timelineEl);
+  }
+
+  // ── COMPTEURS D'IMPACT (fondation) — chiffres réels animés ──
+  const impactBar = document.querySelector('.impact-bar');
+  if (impactBar) {
+    const iObs = new IntersectionObserver(en => {
+      if (!en[0].isIntersecting) return;
+      impactBar.querySelectorAll('.impact-num').forEach(el => {
+        const target = parseInt(el.textContent.replace(/[^0-9]/g, ''), 10);
+        if (!target) return;
+        const t0 = performance.now(), dur = 1800;
+        function tick(now) {
+          const p = Math.min((now - t0) / dur, 1);
+          el.textContent = '+' + Math.round(target * easeOutQuint(p));
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+      iObs.disconnect();
+    }, { threshold: 0.3 });
+    iObs.observe(impactBar);
+  }
+
+  // ── LIEN ACTIF DANS LA NAV ──
+  const navAnchors = {};
+  document.querySelectorAll('.nav-links a[href^="#"]').forEach(a => { navAnchors[a.getAttribute('href').slice(1)] = a; });
+  const activeObserver = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting && navAnchors[en.target.id]) {
+        Object.values(navAnchors).forEach(a => a.classList.remove('active-link'));
+        navAnchors[en.target.id].classList.add('active-link');
+      }
+    });
+  }, { rootMargin: '-35% 0px -55% 0px' });
+  Object.keys(navAnchors).forEach(id => { const s = document.getElementById(id); if (s) activeObserver.observe(s); });
+
+  // ── COPIER L'E-MAIL ──
+  function copyEmail() {
+    const btn = document.getElementById('copy-email-btn');
+    navigator.clipboard.writeText('collywood.collab@gmail.com').then(() => {
+      btn.textContent = isEN() ? 'Copied ✓' : 'Copié ✓';
+      setTimeout(() => { btn.textContent = isEN() ? 'Copy' : 'Copier'; }, 2000);
+    }).catch(() => {});
+  }
+
+  // ── ÉCHAP FERME AUSSI LE MENU ──
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && document.getElementById('menu-panel').classList.contains('active')) toggleMenu();
+  });
 </script>
 </body>
 </html>
