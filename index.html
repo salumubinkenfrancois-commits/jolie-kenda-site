@@ -2447,6 +2447,39 @@
     }
     @keyframes botIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
     .bot-msg.bot { background: var(--white); border: 1px solid var(--gray-light); border-bottom-left-radius: 3px; color: var(--black); align-self: flex-start; }
+    /* Message d'un membre de l'équipe (prise en main humaine) */
+    .bot-msg.staff {
+      background: linear-gradient(135deg, #141414, #0C0C0C);
+      border: 1px solid rgba(184,150,62,0.45);
+      border-bottom-left-radius: 3px;
+      color: rgba(255,255,255,0.92);
+      align-self: flex-start;
+    }
+    .bot-msg.staff::before {
+      content: attr(data-who);
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.8rem;
+      color: var(--gold-light);
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.03em;
+    }
+    .bot-msg.staff a { color: var(--gold-light); }
+    /* Notification discrète (prise en main, clôture…) */
+    .bot-note {
+      align-self: center;
+      text-align: center;
+      max-width: 92%;
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+      color: var(--gray);
+      background: rgba(184,150,62,0.08);
+      border: 1px solid rgba(184,150,62,0.25);
+      border-radius: 20px;
+      padding: 0.4rem 0.9rem;
+      animation: botIn 0.35s cubic-bezier(0.25,1,0.5,1);
+    }
     .bot-msg.me { background: var(--black); color: var(--gold-light); border-bottom-right-radius: 3px; align-self: flex-end; max-width: 82%; }
     .bot-msg strong { font-weight: 600; }
     .bot-msg a { color: var(--gold); font-weight: 500; }
@@ -3485,8 +3518,8 @@
         <div>
           <strong data-i18n="apply.cvWarnTitle">Votre CV n'a pas été transmis</strong>
           <p data-i18n="apply.cvWarnText">Votre paiement est bien confirmé et votre candidature est enregistrée, mais le CV n'a pas pu être envoyé automatiquement. Transmettez-le avec votre référence de paiement :</p>
-          <p style="margin-top:0.45rem;"><a href="mailto:support@collywood-plus.com">support@collywood-plus.com</a></p>
-          <a class="btn-wa" id="success-wa-link" href="https://wa.me/243970130232" target="_blank" rel="noopener noreferrer">WhatsApp · +243 970 130 232</a>
+          <!-- Coordonnées livrées par le serveur uniquement si le paiement est confirmé -->
+          <div id="success-support"></div>
         </div>
       </div>
     </div>
@@ -3500,11 +3533,15 @@
     <span class="modal-eyebrow" data-i18n="prop.eyebrow">Idées &amp; Projets · Collywood</span>
     <h2 class="modal-title" id="modal-propositions-title" data-i18n="menu.proposeIdea">Proposer une idée</h2>
     <p class="modal-desc" data-i18n="prop.desc">Vous avez un projet ou une idée de collaboration ? Toutes les propositions sont lues avec attention.</p>
+    <div class="payment-disclaimer" style="margin-bottom:1.4rem;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:2px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <p data-i18n="prop.notCasting">Ce formulaire est réservé aux <strong>partenariats, projets et demandes presse</strong>. Les candidatures au casting passent uniquement par le bouton « Postuler » et ne sont pas traitées ici.</p>
+    </div>
     <form id="form-propositions" action="https://formspree.io/f/xdavrbdp" method="POST">
       <input type="hidden" name="_subject" value="Nouvelle proposition — Site Jolie Kenda"/>
       <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off"/>
       <div class="form-group"><label data-i18n="f.name">Nom complet *</label><input type="text" name="nom" data-i18n-ph="f.namePh" placeholder="Votre nom et prénom" required/></div>
-      <div class="form-group"><label data-i18n="f.phoneReq">Téléphone *</label><input type="tel" name="telephone" placeholder="+243 XXX XXX XXX" required/></div>
+      <div class="form-group"><label data-i18n="f.phone">Téléphone</label><input type="tel" name="telephone" placeholder="+243 XXX XXX XXX"/></div>
       <div class="form-group"><label data-i18n="f.email">Email *</label><input type="email" name="email" data-i18n-ph="f.emailPh" placeholder="votre@email.com" required/></div>
       <div class="form-group">
         <label data-i18n="prop.type">Type de proposition</label>
@@ -3724,6 +3761,7 @@
       'prop.submit': 'Envoyer ma proposition →', 'prop.note': 'Vos informations restent confidentielles.',
       'prop.successTitle': 'Proposition reçue !',
       'prop.successText': "L'équipe de Jolie Kenda prendra connaissance de votre proposition.",
+      'prop.notCasting': "Ce formulaire est réservé aux <strong>partenariats, projets et demandes presse</strong>. Les candidatures au casting passent uniquement par le bouton « Postuler » et ne sont pas traitées ici.",
       'footer.txt': '© 2026 Jolie Kenda · Collywood — Tous droits réservés. Conçu par <a href="mailto:Kivadigital3@gmail.com">KIVA</a>',
       'apply.currencyLabel': 'Devise de paiement *',
       'apply.curUsdHint': 'Dollar américain', 'apply.curCdfHint': 'Franc congolais',
@@ -3928,6 +3966,7 @@
       'prop.submit': 'Send my proposal →', 'prop.note': 'Your information remains confidential.',
       'prop.successTitle': 'Proposal received!',
       'prop.successText': "Jolie Kenda's team will review your proposal.",
+      'prop.notCasting': "This form is for <strong>partnerships, projects and press enquiries</strong> only. Casting applications go through the “Apply” button and are not handled here.",
       'footer.txt': '© 2026 Jolie Kenda · Collywood — All rights reserved. Designed by <a href="mailto:Kivadigital3@gmail.com">KIVA</a>',
       'apply.currencyLabel': 'Payment currency *',
       'apply.curUsdHint': 'US dollar', 'apply.curCdfHint': 'Congolese franc',
@@ -4190,23 +4229,54 @@
     return r.json();
   }
 
-  // Lien WhatsApp support CV, pré-rempli avec la référence de paiement
-  function waLink(ref) {
-    const msg = isEN()
-      ? 'Hello, I could not send my CV with my application. My payment reference: ' + ref
-      : "Bonjour, je n'ai pas réussi à envoyer mon CV avec ma candidature. Ma référence de paiement : " + ref;
-    return 'https://wa.me/243970130232?text=' + encodeURIComponent(msg);
+  // ── COORDONNÉES SUPPORT — jamais écrites dans la page ──
+  // Elles n'existent que sur le serveur et ne descendent que si le paiement
+  // est confirmé. Rien à trouver dans le code source, rien à indexer.
+  let supportInfo = null; // { whatsapp, whatsapp_url, email } une fois débloqué
+
+  // Construit le bloc de contact à partir des données reçues du serveur
+  function renderSupport(target, info) {
+    const el = typeof target === 'string' ? document.getElementById(target) : target;
+    if (!el || !info) return;
+    el.innerHTML = '';
+    if (info.email) {
+      const p = document.createElement('p');
+      p.style.marginTop = '0.45rem';
+      const a = document.createElement('a');
+      a.href = 'mailto:' + info.email;
+      a.textContent = info.email;
+      p.appendChild(a);
+      el.appendChild(p);
+    }
+    if (info.whatsapp_url) {
+      const wa = document.createElement('a');
+      wa.className = 'btn-wa';
+      wa.href = info.whatsapp_url;
+      wa.target = '_blank';
+      wa.rel = 'noopener noreferrer';
+      wa.textContent = 'WhatsApp · ' + (info.whatsapp || '');
+      el.appendChild(wa);
+    }
   }
 
-  // Écran de succès — cvMissing=true : paiement acquis mais CV non transmis,
-  // on affiche les coordonnées du support (e-mail + WhatsApp) avec la référence
-  function showApplySuccess(cvMissing) {
+  // Écran de succès — cvMissing=true : paiement acquis mais CV non transmis.
+  // On redemande au serveur les coordonnées, qu'il ne livre que si le paiement
+  // est réellement confirmé de son côté.
+  async function showApplySuccess(cvMissing) {
     document.getElementById('form-postuler').style.display = 'none';
     hidePayStatus();
     document.getElementById('success-ref').textContent = (isEN() ? 'Payment reference: ' : 'Référence de paiement : ') + paidRef.orderNumber;
     if (cvMissing) {
-      document.getElementById('success-wa-link').href = waLink(paidRef.orderNumber);
       document.getElementById('success-cv-warning').hidden = false;
+      const st = await checkPaid(paidRef.orderNumber).catch(() => null);
+      if (st && st.paid && st.support) {
+        supportInfo = st.support;
+        renderSupport('success-support', st.support);
+      } else {
+        document.getElementById('success-support').textContent = isEN()
+          ? 'Contact details are loading — if nothing appears, reopen the assistant and use “Verify my payment”.'
+          : "Les coordonnées se chargent — si rien n'apparaît, rouvrez l'assistant et utilisez « Vérifier mon paiement ».";
+      }
     }
     document.getElementById('success-postuler').classList.add('visible');
   }
@@ -4311,7 +4381,7 @@
         fd2.append('montant_frais', FEES[payCurrency].fr);
         fd2.append('methode_paiement', payMethod === 'carte' ? 'Carte bancaire (FlexPay)' : 'Mobile Money (FlexPay)');
         fd2.append('reference_paiement', paidRef.orderNumber);
-        fd2.append('cv_manquant', "OUI — échec technique de l'envoi du CV ; le candidat est invité à l'envoyer à support@collywood-plus.com ou au WhatsApp +243 970 130 232");
+        fd2.append('cv_manquant', "OUI — échec technique de l'envoi du CV ; le candidat a reçu les coordonnées du support pour le transmettre.");
         await fetch(form.action, { method: 'POST', body: fd2, headers: { 'Accept': 'application/json' } }).catch(() => null);
         showApplySuccess(true);
       }
@@ -4732,7 +4802,6 @@
         o: [
           { l: "📧 Écrire au support", a: "mail" },
           { l: "🔎 Vérifier mon paiement", n: "pay_verify" },
-          { l: "💡 Proposer une idée", a: "idea" },
           { l: "← Menu principal", n: "home" }
         ]
       }
@@ -5051,7 +5120,6 @@
         o: [
           { l: "📧 Email support", a: "mail" },
           { l: "🔎 Verify my payment", n: "pay_verify" },
-          { l: "💡 Propose an idea", a: "idea" },
           { l: "← Main menu", n: "home" }
         ]
       }
@@ -5133,9 +5201,14 @@
     }
     if (st.paid) {
       lastVerifiedRef = ref;
+      // Les coordonnées viennent du serveur, jamais de la page
+      supportInfo = st.support || null;
+      const wa = supportInfo && supportInfo.whatsapp ? supportInfo.whatsapp : null;
+      const mail = (supportInfo && supportInfo.email) || 'support@collywood-plus.com';
+      const coords = (wa ? '<li>💬 WhatsApp : <strong>' + wa + '</strong></li>' : '') + '<li>📧 <strong>' + mail + '</strong></li>';
       botSay(en
-        ? "✅ <strong>Payment confirmed!</strong> Your payment (ref. " + ref + ") is validated.<br/><br/>You are in good hands — now send your <strong>CV</strong> together with your <strong>proof of payment</strong> (operator SMS or receipt), mentioning this reference, to:<ul><li>💬 WhatsApp: <strong>+243 970 130 232</strong></li><li>📧 <strong>support@collywood-plus.com</strong></li></ul>The support team will personally take care of you from here."
-        : "✅ <strong>Paiement confirmé !</strong> Votre règlement (réf. " + ref + ") est bien validé.<br/><br/>Vous êtes entre de bonnes mains — envoyez maintenant votre <strong>CV</strong> accompagné de votre <strong>preuve de paiement</strong> (SMS opérateur ou reçu), en mentionnant cette référence, à :<ul><li>💬 WhatsApp : <strong>+243 970 130 232</strong></li><li>📧 <strong>support@collywood-plus.com</strong></li></ul>L'équipe support vous prend personnellement en charge pour la suite.");
+        ? "✅ <strong>Payment confirmed!</strong> Your payment (ref. " + ref + ") is validated.<br/><br/>You are in good hands — now send your <strong>CV</strong> together with your <strong>proof of payment</strong> (operator SMS or receipt), mentioning this reference, to:<ul>" + coords + "</ul>The support team will personally take care of you from here."
+        : "✅ <strong>Paiement confirmé !</strong> Votre règlement (réf. " + ref + ") est bien validé.<br/><br/>Vous êtes entre de bonnes mains — envoyez maintenant votre <strong>CV</strong> accompagné de votre <strong>preuve de paiement</strong> (SMS opérateur ou reçu), en mentionnant cette référence, à :<ul>" + coords + "</ul>L'équipe support vous prend personnellement en charge pour la suite.");
       botRenderOptions({ o: [
         { l: en ? '💬 Continue on WhatsApp' : '💬 Continuer sur WhatsApp', a: 'wa' },
         { l: en ? '📧 Email support' : '📧 Écrire au support', a: 'mail' },
@@ -5205,12 +5278,10 @@
       botSay(en ? "Your email app should open with a ready-made message. Don't forget the attachments. 📎" : "Votre application e-mail devrait s'ouvrir avec un message prêt à l'emploi. N'oubliez pas les pièces jointes. 📎");
       botRenderOptions(botTree()[botNode] || botTree().home);
     } else if (opt.a === 'wa') {
-      // Accès WhatsApp réservé aux paiements confirmés — sinon, vérification d'abord
-      if (!lastVerifiedRef) { botGo('pay_verify'); return; }
-      const msg = en
-        ? 'Hello, my Collywood payment is confirmed (ref: ' + lastVerifiedRef + ') but I could not send my CV through the website. Here are my CV and my proof of payment.'
-        : "Bonjour, mon paiement Collywood est confirmé (réf : " + lastVerifiedRef + ") mais je n'ai pas pu envoyer mon CV via le site. Voici mon CV et ma preuve de paiement.";
-      window.open('https://wa.me/243970130232?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+      // Le lien WhatsApp n'existe que s'il a été livré par le serveur
+      // après confirmation du paiement — rien n'est stocké dans la page.
+      if (!supportInfo || !supportInfo.whatsapp_url) { botGo('pay_verify'); return; }
+      window.open(supportInfo.whatsapp_url, '_blank', 'noopener');
       botSay(en ? "WhatsApp is opening — send your CV and your proof there. 📎" : "WhatsApp s'ouvre — envoyez-y votre CV et votre preuve de paiement. 📎");
       botRenderOptions(botTree()[botNode] || botTree().home);
     }
@@ -5224,10 +5295,12 @@
     botFab.classList.remove('nudge');
     try { localStorage.setItem('jk-bot-seen', '1'); } catch (e) {}
     if (!botStarted) { botStarted = true; botGo('home', true); }
+    startPolling(); // reprend les réponses de l'équipe s'il y en a
   }
   function closeBot() {
     botPanel.classList.remove('open');
     botFab.classList.remove('open');
+    stopPolling();
   }
   function toggleBot() { botPanel.classList.contains('open') ? closeBot() : openBot(); }
 
@@ -5250,8 +5323,8 @@
       updateAskPlaceholder();
       hideTeaser();
       if (!botStarted) return;
-      aiHistory = [];
       lastVerifiedRef = null;
+      supportInfo = null;
       botBody.innerHTML = '';
       botGo('home', true);
     });
@@ -5307,23 +5380,82 @@
   try { botSeen = localStorage.getItem('jk-bot-seen') === '1'; } catch (e) {}
   if (!botSeen) setTimeout(() => showTeaser('idle', 'home'), 25000);
 
-  // ── QUESTION LIBRE — IA (fonction serveur dédiée ; la clé n'est JAMAIS dans la page) ──
-  const BOT_AI = 'https://qckjbvivsyqbsujjbbcf.supabase.co/functions/v1/jolie-kenda-bot';
-  let aiHistory = [];
+  // ──────────────────────────────────────────────────────────────
+  // QUESTION LIBRE — la conversation est enregistrée côté serveur pour
+  // que l'équipe Collywood puisse la lire et REPRENDRE LA MAIN à tout
+  // moment. Tant qu'un humain a la main, l'IA se tait.
+  // ──────────────────────────────────────────────────────────────
+  const CHAT_API = 'https://qckjbvivsyqbsujjbbcf.supabase.co/functions/v1/jolie-kenda-chat';
+  let chatId = null;
+  let chatStatus = 'bot';
+  let lastSeenMsgId = 0;
+  let pollTimer = null;
   let aiBusy = false;
+  try { chatId = localStorage.getItem('jk-chat-id') || null; } catch (e) {}
+
   function updateAskPlaceholder() {
     const inp = document.getElementById('bot-ask-input');
-    if (inp) inp.placeholder = isEN() ? 'Type your question…' : 'Écrivez votre question…';
+    if (!inp) return;
+    inp.placeholder = chatStatus === 'human'
+      ? (isEN() ? 'Reply to the team…' : "Répondre à l'équipe…")
+      : (isEN() ? 'Type your question…' : 'Écrivez votre question…');
   }
+
+  const fmt = (t) => String(t).replace(/</g, '&lt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>');
+
+  // Message d'un membre de l'équipe
+  function staffSay(text) {
+    const d = document.createElement('div');
+    d.className = 'bot-msg staff';
+    d.setAttribute('data-who', isEN() ? 'Collywood team' : 'Équipe Collywood');
+    d.innerHTML = fmt(text);
+    botBody.appendChild(d);
+    botBody.scrollTop = botBody.scrollHeight;
+  }
+  // Notification discrète (prise en main, clôture…)
+  function botNote(text) {
+    const d = document.createElement('div');
+    d.className = 'bot-note';
+    d.textContent = text;
+    botBody.appendChild(d);
+    botBody.scrollTop = botBody.scrollHeight;
+  }
+
+  // Récupère les réponses humaines pendant que la bulle est ouverte
+  async function chatPoll() {
+    if (!chatId || !botPanel.classList.contains('open')) return;
+    try {
+      const r = await fetch(CHAT_API + '/poll', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatId, after: lastSeenMsgId })
+      });
+      const j = await r.json().catch(() => null);
+      if (!j || j.error) return;
+      const before = chatStatus;
+      chatStatus = j.status || chatStatus;
+      (j.messages || []).forEach((m) => {
+        lastSeenMsgId = Math.max(lastSeenMsgId, m.id);
+        if (m.role === 'staff') staffSay(m.content);
+        else botNote(m.content);
+      });
+      if (chatStatus !== before) updateAskPlaceholder();
+    } catch (e) {}
+  }
+  function startPolling() {
+    if (pollTimer || !chatId) return;
+    pollTimer = setInterval(chatPoll, 5000);
+    chatPoll();
+  }
+  function stopPolling() { clearInterval(pollTimer); pollTimer = null; }
+
   async function botAsk() {
     if (aiBusy) return;
     const inp = document.getElementById('bot-ask-input');
-    const q = (inp.value || '').trim().slice(0, 400);
+    const q = (inp.value || '').trim().slice(0, 600);
     if (q.length < 2) return;
     inp.value = '';
     botSay(q.replace(/</g, '&lt;'), 'me');
-    aiHistory.push({ role: 'user', content: q });
-    if (aiHistory.length > 10) aiHistory = aiHistory.slice(-10);
     botActions.innerHTML = '';
     aiBusy = true;
     const typing = document.createElement('div');
@@ -5331,21 +5463,37 @@
     typing.innerHTML = '<i></i><i></i><i></i>';
     botBody.appendChild(typing);
     botBody.scrollTop = botBody.scrollHeight;
-    let reply = null;
+
+    let j = null;
     try {
-      const r = await fetch(BOT_AI, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: aiHistory, lang: isEN() ? 'en' : 'fr' })
+      const r = await fetch(CHAT_API + '/msg', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId, text: q, lang: isEN() ? 'en' : 'fr',
+          page: location.pathname, ref: lastVerifiedRef || undefined
+        })
       });
-      const j = await r.json().catch(() => null);
-      if (j && j.reply) reply = String(j.reply);
+      j = await r.json().catch(() => null);
     } catch (e) {}
     typing.remove();
     aiBusy = false;
-    if (reply) {
-      aiHistory.push({ role: 'assistant', content: reply });
-      botSay(reply.replace(/</g, '&lt;').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>'));
+
+    if (j && j.chat_id) {
+      // reset = l'ancienne conversation était clôturée, le serveur en a ouvert une neuve
+      if (j.reset) { lastSeenMsgId = 0; }
+      chatId = j.chat_id;
+      try { localStorage.setItem('jk-chat-id', chatId); } catch (e) {}
+      chatStatus = j.status || 'bot';
+      startPolling();
+    }
+    if (j && j.reply) {
+      botSay(fmt(j.reply));
+    } else if (j && j.status === 'human') {
+      // Un humain a la main : on rassure sans réponse automatique
+      botNote(isEN()
+        ? 'Message sent to the Collywood team — they are replying to you here.'
+        : "Message transmis à l'équipe Collywood — elle vous répond ici même.");
+      updateAskPlaceholder();
     } else {
       botSay(isEN()
         ? "I could not reach the server — please try again, or use the guided menu."
@@ -5355,6 +5503,7 @@
   }
   document.getElementById('bot-ask-input').addEventListener('keydown', e => { if (e.key === 'Enter') botAsk(); });
   updateAskPlaceholder();
+  if (chatId) startPolling();
 </script>
 </body>
 </html>
