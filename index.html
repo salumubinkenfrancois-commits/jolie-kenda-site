@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
   <title>Jolie Kenda — Actrice, Productrice & Fondatrice de Collywood | Site Officiel</title>
   <meta name="description" content="Site officiel de Jolie Kenda — actrice, productrice de cinéma, entrepreneure et philanthrope congolaise. Fondatrice de Collywood, elle bâtit l'industrie du cinéma congolais et rayonne sur la scène internationale."/>
   <meta name="keywords" content="Jolie Kenda, Collywood, cinéma congolais, productrice RDC, actrice congolaise, fondation Jolie Kenda, ambassadrice Tecno Camon 50, cinéma africain"/>
@@ -1890,6 +1890,17 @@
       .modal { padding: 2rem 1.2rem; max-height: 95vh; }
       .section-divider, .section-divider-dark { padding: 1rem 1.2rem; }
     }
+    /* ── ANTI-ZOOM AU CLIC (iPhone) ──
+       Safari zoome automatiquement dès qu'un champ fait moins de 16 px.
+       C'est ce qui faisait « sauter » l'écran à l'ouverture de l'assistant.
+       On force 16 px sur mobile : l'apparence bouge à peine, le zoom disparaît. */
+    @media (max-width: 820px) {
+      .form-group input, .form-group textarea, .form-group select,
+      .bot-input-row input, #bot-ask-input {
+        font-size: 16px;
+      }
+    }
+
     @media (min-width: 769px) and (max-width: 1024px) {
       .hero { grid-template-columns: 52% 48%; }
       .about-grid, .engagement-grid, .contact-grid { gap: 3rem; }
