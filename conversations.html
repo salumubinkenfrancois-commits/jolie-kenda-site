@@ -57,6 +57,38 @@
   .badge{background:var(--red);color:#fff;border-radius:10px;padding:.1rem .4rem;font-size:.6rem;font-weight:500}
   .empty{padding:3rem 1.5rem;text-align:center;color:var(--gray);font-size:.8rem;line-height:1.7}
 
+  /* ── TABLEAU DE BORD ── */
+  #dash{grid-column:1/-1;overflow-y:auto;background:var(--cream);padding:1.4rem;display:none}
+  body.dashing #dash{display:block}
+  body.dashing #list,body.dashing #thread{display:none}
+  .dash-h{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;margin:1.6rem 0 .8rem}
+  .dash-h:first-child{margin-top:0}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:.8rem}
+  .card{background:var(--white);border:1px solid var(--gray-light);border-radius:8px;padding:1rem 1.1rem;box-shadow:0 2px 10px rgba(0,0,0,.03)}
+  .card.gold{background:linear-gradient(135deg,#141414,#0C0C0C);border-color:rgba(184,150,62,.4)}
+  .card.gold .card-n{color:var(--gold-light)}
+  .card.gold .card-l{color:rgba(255,255,255,.45)}
+  .card-n{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:400;line-height:1;color:var(--black)}
+  .card-n small{font-size:.9rem;color:var(--gray);font-family:'Inter',sans-serif;font-weight:300}
+  .card-l{font-size:.6rem;letter-spacing:.11em;text-transform:uppercase;color:var(--gray);margin-top:.4rem}
+  .card-sub{font-size:.65rem;color:var(--gray);margin-top:.3rem}
+  table.t{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--gray-light);border-radius:8px;overflow:hidden;font-size:.76rem}
+  table.t th{text-align:left;padding:.6rem .8rem;background:#faf8f3;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);font-weight:500}
+  table.t td{padding:.6rem .8rem;border-top:1px solid #f2f0eb}
+  .st{font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;padding:.12rem .45rem;border-radius:10px}
+  .st.paid{background:rgba(37,211,102,.14);color:#128C3E}
+  .st.pending{background:rgba(184,150,62,.15);color:#8a6e26}
+  .st.failed{background:rgba(229,72,77,.12);color:#b3262b}
+  .bars{display:flex;align-items:flex-end;gap:3px;height:80px;padding:.9rem;background:var(--white);border:1px solid var(--gray-light);border-radius:8px}
+  .bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;gap:2px}
+  .bar i{display:block;border-radius:2px 2px 0 0;min-height:2px}
+  .bar .b1{background:var(--gold)}
+  .bar .b2{background:#141414}
+  .bar span{font-size:.5rem;color:var(--gray);text-align:center;margin-top:3px}
+  .legend{display:flex;gap:1rem;margin-top:.5rem;font-size:.62rem;color:var(--gray)}
+  .legend b{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:.3rem;vertical-align:middle}
+  .note-info{background:rgba(184,150,62,.08);border:1px solid rgba(184,150,62,.28);border-radius:6px;padding:.75rem .95rem;font-size:.72rem;color:var(--gray);line-height:1.6;margin-top:.7rem}
+
   /* ── FIL ── */
   #thread{display:flex;flex-direction:column;overflow:hidden;background:var(--cream)}
   #thread-head{padding:.85rem 1.3rem;background:var(--white);border-bottom:1px solid var(--gray-light);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
@@ -112,6 +144,7 @@
     <div class="brand">Conversations<small>Assistant Collywood</small></div>
     <div class="head-right">
       <span class="live"><i></i><span id="live-txt">en direct</span></span>
+      <button class="hbtn" onclick="showDash()" id="dash-btn">📊 Tableau de bord</button>
       <button class="hbtn" onclick="toggleSound()" id="snd-btn">🔔 Son</button>
       <button class="hbtn" onclick="logout()">Quitter</button>
     </div>
@@ -128,6 +161,8 @@
   <div id="thread">
     <div class="placeholder" id="ph">Sélectionnez une conversation<br/>pour la lire et répondre.</div>
   </div>
+
+  <div id="dash"><div class="empty">Chargement des statistiques…</div></div>
 </div>
 
 <script>
@@ -331,6 +366,95 @@ async function setStatus(st) {
   try { await api({ action: 'status', chat_id: current, status: st }); } catch (e) { return; }
   await loadThread(current, false);
   refresh();
+}
+
+// ─────────── TABLEAU DE BORD ───────────
+function showDash() {
+  const on = !document.body.classList.contains('dashing');
+  document.body.classList.toggle('dashing', on);
+  document.getElementById('dash-btn').textContent = on ? '💬 Conversations' : '📊 Tableau de bord';
+  if (on) loadDash();
+}
+const eur = (n) => Number(n || 0).toLocaleString('fr-FR');
+
+async function loadDash() {
+  let j;
+  try { j = await api({ action: 'dashboard' }); } catch (e) { return; }
+  if (!j || !j.stats) { document.getElementById('dash').innerHTML = '<div class="empty">Statistiques indisponibles.</div>'; return; }
+  const s = j.stats, p = s.paiements, c = s.conversations;
+  const conv = p.tentatives_total ? Math.round((p.confirmes_total / p.tentatives_total) * 100) : 0;
+  const abandons = Math.max(0, p.tentatives_total - p.confirmes_total - p.echecs_total);
+
+  // Courbe des 14 derniers jours
+  const maxJ = Math.max(1, ...s.jours.map(d => Math.max(d.conv, d.pay)));
+  const bars = s.jours.map(d => {
+    const jour = new Date(d.j).getDate();
+    return '<div class="bar" title="' + d.j + ' — ' + d.conv + ' conversation(s), ' + d.pay + ' paiement(s)">' +
+      '<i class="b1" style="height:' + Math.round(d.pay / maxJ * 100) + '%"></i>' +
+      '<i class="b2" style="height:' + Math.round(d.conv / maxJ * 100) + '%"></i>' +
+      '<span>' + jour + '</span></div>';
+  }).join('');
+
+  // Heures où les visiteurs écrivent le plus
+  const ha = s.activite_horaire || {};
+  const heures = Object.keys(ha).map(Number).sort((a, b) => (ha[b] || 0) - (ha[a] || 0)).slice(0, 3);
+  const heuresTxt = heures.length
+    ? heures.map(h => String(h).padStart(2, '0') + 'h–' + String((h + 1) % 24).padStart(2, '0') + 'h (' + ha[h] + ')').join(' · ')
+    : 'pas encore de données';
+
+  const meth = p.par_methode || {}, dev = p.par_devise || {}, lg = c.par_langue || {};
+
+  document.getElementById('dash').innerHTML =
+    '<div class="dash-h">Paiements</div>' +
+    '<div class="cards">' +
+      card(p.confirmes_total, 'Paiements confirmés', 'depuis le début', true) +
+      card(eur(p.usd_encaisse) + ' <small>USD</small>', 'Encaissé en dollars', '') +
+      card(eur(p.cdf_encaisse) + ' <small>FC</small>', 'Encaissé en francs', '') +
+      card(p.confirmes_jour, "Aujourd'hui", p.confirmes_7j + ' sur 7 jours · ' + p.confirmes_30j + ' sur 30 jours') +
+      card(conv + ' <small>%</small>', 'Taux de réussite', p.confirmes_total + ' confirmés sur ' + p.tentatives_total + ' tentatives') +
+      card(abandons, 'Abandons en cours de route', 'ont commencé sans finir') +
+      card(p.en_attente, 'En attente de validation', 'push non validé sur le téléphone') +
+      card(p.echecs_total, 'Paiements refusés', 'solde insuffisant, carte refusée…') +
+    '</div>' +
+    (abandons > 0 ? '<div class="note-info"><strong>' + abandons + ' candidat(s) ont commencé un paiement sans le terminer.</strong> C\'est souvent un push Mobile Money non validé à temps, ou une carte refusée. Ce sont des candidatures perdues qu\'un simple rappel peut récupérer.</div>' : '') +
+
+    '<div class="dash-h">Activité des 14 derniers jours</div>' +
+    '<div class="bars">' + bars + '</div>' +
+    '<div class="legend"><span><b style="background:#141414"></b>Conversations</span><span><b style="background:var(--gold)"></b>Paiements confirmés</span></div>' +
+
+    '<div class="dash-h">Conversations</div>' +
+    '<div class="cards">' +
+      card(c.total, 'Conversations au total', c['7j'] + ' sur 7 jours · ' + c.jour + " aujourd'hui") +
+      card(c.en_cours, 'En cours', c.non_lues + ' message(s) non lu(s)') +
+      card(c.prise_en_main, 'Où vous répondez', 'prise en main active') +
+      card(c.avec_paiement, 'Avec paiement vérifié', 'candidats confirmés', true) +
+      card(c.messages, 'Messages échangés', 'visiteurs, bot et vous') +
+    '</div>' +
+    '<div class="note-info"><strong>Heures où l\'on vous écrit le plus :</strong> ' + heuresTxt +
+      '<br/><strong>Langues :</strong> ' + (Object.keys(lg).length ? Object.keys(lg).map(k => k.toUpperCase() + ' : ' + lg[k]).join(' · ') : 'aucune donnée') +
+      (Object.keys(meth).length ? '<br/><strong>Moyens de paiement :</strong> ' + Object.keys(meth).map(k => (k === 'carte' ? 'Carte' : 'Mobile Money') + ' : ' + meth[k]).join(' · ') : '') +
+      (Object.keys(dev).length ? '<br/><strong>Devises choisies :</strong> ' + Object.keys(dev).map(k => k + ' : ' + dev[k]).join(' · ') : '') +
+    '</div>' +
+
+    '<div class="dash-h">Derniers paiements</div>' +
+    (p.recents.length
+      ? '<table class="t"><tr><th>Date</th><th>Référence</th><th>Montant</th><th>Moyen</th><th>Tél.</th><th>État</th></tr>' +
+        p.recents.map(r =>
+          '<tr><td>' + new Date(r.created_at).toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) + '</td>' +
+          '<td style="font-family:monospace;font-size:.7rem">' + esc(r.order_number || r.reference || '') + '</td>' +
+          '<td>' + eur(r.amount) + ' ' + esc(r.currency || '') + '</td>' +
+          '<td>' + (r.method === 'carte' ? 'Carte' : 'Mobile Money') + '</td>' +
+          '<td>' + (r.phone_hint ? '••••' + esc(r.phone_hint) : '—') + '</td>' +
+          '<td><span class="st ' + esc(r.status) + '">' + (r.status === 'paid' ? 'Payé' : r.status === 'failed' ? 'Refusé' : 'En attente') + '</span></td></tr>'
+        ).join('') + '</table>'
+      : '<div class="empty">Aucun paiement enregistré pour l\'instant.</div>') +
+    '<div class="note-info">Seuls les <strong>4 derniers chiffres</strong> du téléphone sont conservés, par respect de la vie privée des candidats. Pour retrouver une personne, utilisez sa <strong>référence</strong> — c\'est elle qui figure dans l\'e-mail de candidature.</div>';
+}
+
+function card(n, label, sub, gold) {
+  return '<div class="card' + (gold ? ' gold' : '') + '"><div class="card-n">' + n + '</div>' +
+    '<div class="card-l">' + label + '</div>' +
+    (sub ? '<div class="card-sub">' + sub + '</div>' : '') + '</div>';
 }
 
 if (KEY) { api({ action: 'ping' }).then(j => { if (j && j.ok) enter(); else logout(); }).catch(() => logout()); }
